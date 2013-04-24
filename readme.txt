@@ -1,6 +1,6 @@
 === BP XProfile WordPress User Sync ===
 Contributors: needle
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PZSKM8T5ZP3SC
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8MZNB9D3PF48S
 Tags: buddypress, xprofile, profile, sync
 Requires at least: 3.5
 Tested up to: 3.5.1
