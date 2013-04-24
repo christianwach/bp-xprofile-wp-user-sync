@@ -130,7 +130,8 @@ class BpXProfileWordPressUserSync {
 		// save options array
 		add_option( 'bp_xp_wp_sync_options', $this->options );
 		
-		// set installed flag
+		// set installed flag - redundant, given that we can't retain data when
+		// the plugin is deactivated
 		add_option( 'bp_xp_wp_sync_installed', 'true' );
 
 	}
@@ -358,7 +359,9 @@ class BpXProfileWordPressUserSync {
 		$name = $first_name.' '.$last_name;
 		//print_r( array( 'name' => $name ) ); die();
 
-		// finally, set default name field for this user
+		// set default name field for this user - setting it now ensures that 
+		// when xprofile_sync_wp_profile() is called, BuddyPress has the correct
+		// data to perform its updates with
 		xprofile_set_field_data( bp_xprofile_fullname_field_name(), $user_id, $name );
 		
 	}
