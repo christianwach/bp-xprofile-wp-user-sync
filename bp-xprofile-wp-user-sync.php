@@ -174,21 +174,15 @@ class BpXProfileWordPressUserSync {
 	 */
 	function register_hooks() {
 	
-		// intercept xprofile field save process
-		//add_action( 'xprofile_data_after_save', array( $this, 'intercept_save' ), 10, 1 );
-		add_action( 'xprofile_data_before_save', array( $this, 'intercept_save' ), 10, 1 );
-
-		// show the default name field type in read mode after all BuddyPress filters
-		add_filter( 'bp_get_the_profile_field_value', array( $this, 'intercept_read' ), 30, 3 );
-		
-		// exclude the default name field type in edit mode
+		// exclude the default name field type on proflie edit and registration 
+		// screens and exclude our fields on proflie view screen
 		add_filter( 'bp_has_profile', array( $this, 'intercept_edit' ), 30, 2 );
 		
 		// populate our fields on user registration and update by admins
 		add_action( 'user_register', array( $this, 'intercept_wp_user' ), 30, 1 );
 		add_action( 'profile_update', array( $this, 'intercept_wp_user' ), 30, 1 );
 		
-		// we have to update the default name field before xprofile_sync_wp_profile
+		// update the default name field before xprofile_sync_wp_profile is called
 		add_action( 'xprofile_updated_profile', array( $this, 'intercept_sync_wp_profile' ), 9, 3 );
 		add_action( 'bp_core_signup_user', array( $this, 'intercept_sync_wp_profile' ), 9, 3 );
 		add_action( 'bp_core_activated_user', array( $this, 'intercept_sync_wp_profile' ), 9, 3 );
@@ -198,83 +192,12 @@ class BpXProfileWordPressUserSync {
 	
 		
 	/**
-	 * @description: intercept xprofile save process
-	 * @param array $field
-	 * @return array
-	 */
-	function intercept_save( $field ) {
-
-		// get field id from name
-		$fullname_field_id = xprofile_get_field_id_from_name( bp_xprofile_fullname_field_name() );
-		
-		// is this it?
-		if ( $field->field_id == $fullname_field_id ) {
-		
-			// save it for later
-			$this->fullname_field = clone $field;
-		
-		}
-		
-		// is it our first_name field?
-		if ( $field->field_id == $this->options[ 'first_name_field_id' ] ) {
-		
-		}
-		
-		// is it our last_name field?
-		if ( $field->field_id == $this->options[ 'last_name_field_id' ] ) {
-		
-		}
-		
-		// --<
-		return $field;
-	
-	}
-	
-	
-	
-	/**
-	 * @description: intercept xprofile read process
-	 * @param string $value
-	 * @param string $type
-	 * @param integer $id
-	 * @return string
-	 */
-	function intercept_read( $value = '', $type = '', $id = '' ) {
-
-		//print_r( array( $value, $type, $id ) ); die();
-
-		// get field id from name
-		$fullname_field_id = xprofile_get_field_id_from_name( bp_xprofile_fullname_field_name() );
-		
-		// is this it?
-		if ( $id == $fullname_field_id ) {
-			
-			// trace
-			//print_r( array( $value, $type, $id ) ); //die();
-		
-		}
-		
-		return $value;
-	
-	}
-	
-	
-	
-	/**
 	 * @description: intercept xprofile edit process and exclude default name field
 	 * @param boolean $has_groups
 	 * @param object $profile_template
 	 * @return boolean $has_groups
 	 */
 	function intercept_edit( $has_groups, $profile_template ) {
-		
-		/*
-		// trace
-		print_r( array( 
-			'has_groups' => $has_groups,
-			'profile_template' => $profile_template
-		) ); die();
-		*/
 		
 		// init args
 		$args = array();
