@@ -227,13 +227,13 @@ class BpXProfileWordPressUserSync {
 		if ( count( $args ) > 0 ) {
 
 			// ditch our filter so we don't create an endless loop
-			remove_filter( 'bp_has_profile', array( $this, 'intercept_edit' ), 30 );
+			remove_filter( 'bp_has_profile', array( $this, 'intercept_profile_query' ), 30 );
 
 			// recreate profile_template
 			$has_groups = bp_has_profile( $args );
 	
 			// add our filter again in case there are any other calls to bp_has_profile
-			add_filter( 'bp_has_profile', array( $this, 'intercept_edit' ), 30, 2 );
+			add_filter( 'bp_has_profile', array( $this, 'intercept_profile_query' ), 30, 2 );
 			
 		}
 			
@@ -245,7 +245,7 @@ class BpXProfileWordPressUserSync {
 	
 	
 	/**
-	 * @description: intercept WP user registration process and populate our fields
+	 * @description: intercept WP user registration and update process and populate our fields
 	 * @param integer $user_id
 	 * @return nothing
 	 */
@@ -295,6 +295,27 @@ class BpXProfileWordPressUserSync {
 				$last_name
 			);
 			
+			// When XProfiles are updated, BuddyPress sets user nickname and display name 
+			// so we should too...
+
+			// construct full name
+			$full_name = $first_name.' '.$last_name;
+			
+			// set user nickname
+			bp_update_user_meta( $user_id, 'nickname', $full_name );
+			
+			// access db
+			global $wpdb;
+
+			// set user display name - see xprofile_sync_wp_profile()
+			$wpdb->query( 
+				$wpdb->prepare( 
+					"UPDATE {$wpdb->users} SET display_name = %s WHERE ID = %d", 
+					$full_name, 
+					$user_id 
+				)
+			);
+			
 		}
 	}
 
@@ -308,15 +329,6 @@ class BpXProfileWordPressUserSync {
 	 * @return nothing
 	 */
 	function intercept_wp_profile_sync( $user_id = 0, $posted_field_ids, $errors ) {
-		
-		/*
-		// trace
-		print_r( array( 
-			'user_id' => $user_id,
-			'posted_field_ids' => $posted_field_ids,
-			'errors' => $errors
-		) ); die();
-		*/
 		
 		// we're hooked in before BP core
 		$bp = buddypress();
