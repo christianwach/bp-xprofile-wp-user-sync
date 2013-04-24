@@ -176,28 +176,28 @@ class BpXProfileWordPressUserSync {
 	
 		// exclude the default name field type on proflie edit and registration 
 		// screens and exclude our fields on proflie view screen
-		add_filter( 'bp_has_profile', array( $this, 'intercept_edit' ), 30, 2 );
+		add_filter( 'bp_has_profile', array( $this, 'intercept_profile_query' ), 30, 2 );
 		
 		// populate our fields on user registration and update by admins
-		add_action( 'user_register', array( $this, 'intercept_wp_user' ), 30, 1 );
-		add_action( 'profile_update', array( $this, 'intercept_wp_user' ), 30, 1 );
+		add_action( 'user_register', array( $this, 'intercept_wp_user_update' ), 30, 1 );
+		add_action( 'profile_update', array( $this, 'intercept_wp_user_update' ), 30, 1 );
 		
 		// update the default name field before xprofile_sync_wp_profile is called
-		add_action( 'xprofile_updated_profile', array( $this, 'intercept_sync_wp_profile' ), 9, 3 );
-		add_action( 'bp_core_signup_user', array( $this, 'intercept_sync_wp_profile' ), 9, 3 );
-		add_action( 'bp_core_activated_user', array( $this, 'intercept_sync_wp_profile' ), 9, 3 );
+		add_action( 'xprofile_updated_profile', array( $this, 'intercept_wp_profile_sync' ), 9, 3 );
+		add_action( 'bp_core_signup_user', array( $this, 'intercept_wp_profile_sync' ), 9, 3 );
+		add_action( 'bp_core_activated_user', array( $this, 'intercept_wp_profile_sync' ), 9, 3 );
 		
 	}
 	
 	
 		
 	/**
-	 * @description: intercept xprofile edit process and exclude default name field
+	 * @description: intercept xprofile query process and manage display of fields
 	 * @param boolean $has_groups
 	 * @param object $profile_template
 	 * @return boolean $has_groups
 	 */
-	function intercept_edit( $has_groups, $profile_template ) {
+	function intercept_profile_query( $has_groups, $profile_template ) {
 		
 		// init args
 		$args = array();
@@ -249,7 +249,7 @@ class BpXProfileWordPressUserSync {
 	 * @param integer $user_id
 	 * @return nothing
 	 */
-	function intercept_wp_user( $user_id ) {
+	function intercept_wp_user_update( $user_id ) {
 
 		// only map data when the site admin is adding users, not on registration.
 		if ( !is_admin() ) { return false; }
@@ -307,7 +307,7 @@ class BpXProfileWordPressUserSync {
 	 * @param boolean $errors
 	 * @return nothing
 	 */
-	function intercept_sync_wp_profile( $user_id = 0, $posted_field_ids, $errors ) {
+	function intercept_wp_profile_sync( $user_id = 0, $posted_field_ids, $errors ) {
 		
 		/*
 		// trace
