@@ -31,7 +31,7 @@ class BpXProfileWordPressUserSync {
 	 */
 	
 	// plugin options
-	var $options = array();
+	public $options = array();
 	
 	
 	
