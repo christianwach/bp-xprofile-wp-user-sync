@@ -247,6 +247,11 @@ class BpXProfileWordPressUserSync {
 	
 	/**
 	 * @description: intercept WP user registration and update process and populate our fields
+	 * however, BuddyPress updates the "Name" field before wp_insert_user or wp_update_user get
+	 * called - it hooks into 'user_profile_update_errors' instead. So, there are two options:
+	 * either hook into the same action or call the same function below. Until I raise this as
+	 * an issue (ie, why do database operations via an action designed to collate errors) I'll
+	 * temporarily call the same function.
 	 * @param integer $user_id
 	 * @return nothing
 	 */
@@ -315,6 +320,15 @@ class BpXProfileWordPressUserSync {
 					$full_name, 
 					$user_id 
 				)
+			);
+			
+			// see notes above regarding when BuddyPress updates the "Name" field
+
+			// update BuddyPress "Name" field directly
+			xprofile_set_field_data( 
+				bp_xprofile_fullname_field_name(), 
+				$user_id, 
+				$full_name 
 			);
 			
 		}
