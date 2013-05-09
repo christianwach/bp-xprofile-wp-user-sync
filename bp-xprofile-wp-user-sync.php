@@ -332,6 +332,7 @@ class BpXProfileWordPressUserSync {
 			);
 			
 		}
+		
 	}
 
 
@@ -500,7 +501,7 @@ register_activation_hook( __FILE__, array( $bp_xprofile_wordpress_user_sync, 'ac
 // deactivation
 register_deactivation_hook( __FILE__, array( $bp_xprofile_wordpress_user_sync, 'deactivate' ) );
 
-// uninstall uses the 'uninstall.php' method
+// uninstall will use the 'uninstall.php' method when XProfile fields can be "deactivated"
 // see: http://codex.wordpress.org/Function_Reference/register_uninstall_hook
 
 
