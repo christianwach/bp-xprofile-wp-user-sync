@@ -83,7 +83,7 @@ class BpXProfileWordPressUserSync {
 	 * @description: insert xprofile fields for first and last name
 	 * @return array
 	 */
-	function activate() {
+	public function activate() {
 	
 		// are we re-activating?
 		if ( get_option( 'bp_xp_wp_sync_installed', 'false' ) === 'true' ) {
@@ -142,7 +142,7 @@ class BpXProfileWordPressUserSync {
 	 * @description: actions to perform on plugin deactivation (NOT deletion)
 	 * @return nothing
 	 */
-	function deactivate() {
+	public function deactivate() {
 		
 		// there seems to be no way to hide the xprofile fields once they have
 		// been created, so we're left with no option but to lose the data when
@@ -173,7 +173,7 @@ class BpXProfileWordPressUserSync {
 	 * @description: actions to perform on plugin init
 	 * @return nothing
 	 */
-	function register_hooks() {
+	public function register_hooks() {
 	
 		// exclude the default name field type on proflie edit and registration 
 		// screens and exclude our fields on proflie view screen
@@ -198,7 +198,7 @@ class BpXProfileWordPressUserSync {
 	 * @param object $profile_template
 	 * @return boolean $has_groups
 	 */
-	function intercept_profile_query( $has_groups, $profile_template ) {
+	public function intercept_profile_query( $has_groups, $profile_template ) {
 		
 		// init args
 		$args = array();
@@ -246,8 +246,8 @@ class BpXProfileWordPressUserSync {
 	
 	
 	/**
-	 * @description: intercept WP user registration and update process and populate our fields
-	 * however, BuddyPress updates the "Name" field before wp_insert_user or wp_update_user get
+	 * @description: intercept WP user registration and update process and populate our fields.
+	 * However, BuddyPress updates the "Name" field before wp_insert_user or wp_update_user get
 	 * called - it hooks into 'user_profile_update_errors' instead. So, there are two options:
 	 * either hook into the same action or call the same function below. Until I raise this as
 	 * an issue (ie, why do database operations via an action designed to collate errors) I'll
@@ -255,7 +255,7 @@ class BpXProfileWordPressUserSync {
 	 * @param integer $user_id
 	 * @return nothing
 	 */
-	function intercept_wp_user_update( $user_id ) {
+	public function intercept_wp_user_update( $user_id ) {
 
 		// only map data when the site admin is adding users, not on registration.
 		if ( !is_admin() ) { return false; }
@@ -343,7 +343,7 @@ class BpXProfileWordPressUserSync {
 	 * @param boolean $errors
 	 * @return nothing
 	 */
-	function intercept_wp_profile_sync( $user_id = 0, $posted_field_ids, $errors ) {
+	public function intercept_wp_profile_sync( $user_id = 0, $posted_field_ids, $errors ) {
 		
 		// we're hooked in before BP core
 		$bp = buddypress();
@@ -391,7 +391,7 @@ class BpXProfileWordPressUserSync {
 	 * @param string $field_name
 	 * @return integer $field_id on success, false on failure
 	 */
-	function _create_field( $field_name ) {
+	private function _create_field( $field_name ) {
 	
 		// common field attributes
 
@@ -428,7 +428,10 @@ class BpXProfileWordPressUserSync {
 		if ( !is_numeric( $field_id ) ) {
 			
 			// construct message
-			$msg = __( 'BP XProfile WordPress User Sync plugin: Could not create XProfile field' );
+			$msg = __( 
+				'BP XProfile WordPress User Sync plugin: Could not create XProfile field', 
+				'bp-xprofile-wordpress-user-sync'
+			);
 			
 			// use var_dump as this seems to display in the iframe
 			var_dump( $msg ); die();
@@ -462,7 +465,10 @@ class BpXProfileWordPressUserSync {
 			if ( $wpdb->query( $sql ) !== 1 ) {
 			
 				// construct message
-				$msg = __( 'BP XProfile WordPress User Sync plugin: Could not set "can_delete" for XProfile field' );
+				$msg = __( 
+					'BP XProfile WordPress User Sync plugin: Could not set "can_delete" for XProfile field', 
+					'bp-xprofile-wordpress-user-sync'
+				);
 			
 				// use var_dump as this seems to display in the iframe
 				var_dump( $msg ); die();
