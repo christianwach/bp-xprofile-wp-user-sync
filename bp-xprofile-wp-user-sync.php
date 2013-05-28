@@ -188,6 +188,9 @@ class BpXProfileWordPressUserSync {
 		add_action( 'bp_core_signup_user', array( $this, 'intercept_wp_profile_sync' ), 9, 3 );
 		add_action( 'bp_core_activated_user', array( $this, 'intercept_wp_profile_sync' ), 9, 3 );
 		
+		// compatibility with "WP FB AutoConnect Premium"
+		add_filter( 'wpfb_xprofile_fields_received', array( $this, 'intercept_wp_fb_profile_sync' ), 10, 2 );
+		
 	}
 	
 	
@@ -378,6 +381,45 @@ class BpXProfileWordPressUserSync {
 		// when xprofile_sync_wp_profile() is called, BuddyPress has the correct
 		// data to perform its updates with
 		xprofile_set_field_data( bp_xprofile_fullname_field_name(), $user_id, $name );
+		
+	}
+
+
+
+	/**
+	 * @description: compatibility with "WP FB AutoConnect Premium"
+	 * @param array $facebook_user
+	 * @return array $facebook_user
+	 */
+	public function intercept_wp_fb_profile_sync( $facebook_user, $wp_user_id ) {
+	
+		/*
+		------------------------------------------------------------------------
+		When XProfiles are updated, BuddyPress sets user nickname and display name 
+		so WP FB AutoConnect Premium should do too. To do so, alter line 1315 or so:
+
+		//A filter so 3rd party plugins can process any extra fields they might need
+		$fbuser = apply_filters('wpfb_xprofile_fields_received', $fbuser, $args['WP_ID']);
+		------------------------------------------------------------------------
+		*/
+
+		// set user nickname
+		bp_update_user_meta( $wp_user_id, 'nickname', $facebook_user['name'] );
+		
+		// access db
+		global $wpdb;
+
+		// set user display name - see xprofile_sync_wp_profile()
+		$wpdb->query( 
+			$wpdb->prepare( 
+				"UPDATE {$wpdb->users} SET display_name = %s WHERE ID = %d", 
+				$facebook_user['name'], 
+				$wp_user_id 
+			)
+		);
+		
+		// pass it on
+		return $facebook_user;
 		
 	}
 
