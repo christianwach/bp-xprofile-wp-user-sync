@@ -491,6 +491,8 @@ class BpXProfileWordPressUserSync {
 
 
 
+// declare as global
+global $bp_xprofile_wordpress_user_sync;
 
 // init plugin
 $bp_xprofile_wordpress_user_sync = new BpXProfileWordPressUserSync;
