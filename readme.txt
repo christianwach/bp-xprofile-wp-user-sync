@@ -3,8 +3,8 @@ Contributors: needle
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8MZNB9D3PF48S
 Tags: buddypress, xprofile, profile, sync
 Requires at least: 3.5
-Tested up to: 3.5.1
-Stable tag: 0.2
+Tested up to: 3.6.1
+Stable tag: 0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -31,6 +31,10 @@ The plugin replaces the default BuddyPress XProfile Name field with two fields c
 
 
 == Changelog ==
+
+= 0.3 =
+
+Compatibility with 'WP FB AutoConnect Premium' and 'CiviCRM WordPress Profile Sync' plugins
 
 = 0.2 =
 

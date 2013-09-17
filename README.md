@@ -5,6 +5,8 @@ The *BP XProfile WordPress User Sync* plugin is useful when you have a BuddyPres
 
 The plugin replaces the default BuddyPress XProfile *Name* field with two fields called (surprisingly) *First Name* and *Last Name*. These field values are kept in sync with the corresponding WordPress user profile fields as well as the BuddyPress XProfile *Name* field itself.
 
+It has further compatibility with WP FB AutoConnect Premium logins, so that - like BuddyPress - a WordPress user's nickname and display name are also updated when their XProfile is updated.
+
 ## Installation ##
 
 ### GitHub ###
