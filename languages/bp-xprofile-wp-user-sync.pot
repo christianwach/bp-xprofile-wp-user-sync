@@ -1,0 +1,48 @@
+# Copyright (C) 2013 BP XProfile WordPress User Sync
+# This file is distributed under the same license as the BP XProfile WordPress User Sync package.
+msgid ""
+msgstr ""
+"Project-Id-Version: BP XProfile WordPress User Sync 0.3\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/bp-xprofile-wp-user-sync\n"
+"POT-Creation-Date: 2013-09-24 20:11:13+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2013-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: bp-xprofile-wp-user-sync.php:148
+msgid "First Name"
+msgstr ""
+
+#: bp-xprofile-wp-user-sync.php:164
+msgid "Last Name"
+msgstr ""
+
+#: bp-xprofile-wp-user-sync.php:520
+msgid "BP XProfile WordPress User Sync plugin: Could not create XProfile field"
+msgstr ""
+
+#: bp-xprofile-wp-user-sync.php:557
+msgid "BP XProfile WordPress User Sync plugin: Could not set \"can_delete\" for XProfile field"
+msgstr ""
+#. Plugin Name of the plugin/theme
+msgid "BP XProfile WordPress User Sync"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "http://haystack.co.uk"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Map BuddyPress XProfile fields to WordPress User fields. <strong>Note:</strong> because there is no way to hide XProfile fields, all data associated with this plugin will be lost when it is deactivated."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Christian Wach"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://haystack.co.uk"
+msgstr ""
