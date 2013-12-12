@@ -3,7 +3,7 @@
 --------------------------------------------------------------------------------
 Plugin Name: BP XProfile WordPress User Sync
 Description: Map BuddyPress XProfile fields to WordPress User fields. <strong>Note:</strong> because there is no way to hide XProfile fields, all data associated with this plugin will be lost when it is deactivated.
-Version: 0.3
+Version: 0.4
 Author: Christian Wach
 Author URI: http://haystack.co.uk
 Plugin URI: http://haystack.co.uk
@@ -13,7 +13,7 @@ Plugin URI: http://haystack.co.uk
 
 
 // set our version here
-define( 'BP_XPROFILE_WP_USER_SYNC_VERSION', '0.2' );
+define( 'BP_XPROFILE_WP_USER_SYNC_VERSION', '0.4' );
 
 // store reference to this file
 if ( !defined( 'BP_XPROFILE_WP_USER_SYNC_FILE' ) ) {
@@ -535,6 +535,7 @@ class BpXProfileWordPressUserSync {
 		);
 		
 		// BuddyPress 1.7 seems to overlook our 'can_delete' setting
+		// Fixed in BuddyPress 1.9, but leave the check below for older versions
 		$field = new BP_XProfile_Field( $field_id );
 		
 		// let's see if our new field is correctly set
