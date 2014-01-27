@@ -7,6 +7,8 @@ The plugin replaces the default BuddyPress XProfile *Name* field with two fields
 
 It has further compatibility with WP FB AutoConnect Premium logins, so that - like BuddyPress - a WordPress user's nickname and display name are also updated when their XProfile is updated.
 
+If you're a developer, I'd welcome your contributions. If not, it's probably better to install this plugin from the [WordPress Plugin Directory](http://wordpress.org/plugins/bp-xprofile-wp-user-sync/).
+
 ## Installation ##
 
 ### GitHub ###
@@ -26,6 +28,14 @@ If you have downloaded *BP XProfile WordPress User Sync* as a ZIP file from the 
 If you have cloned the code from GitHub, it is assumed that you know what you're doing.
 
 ## Changelogs ##
+
+### 0.4 ###
+
+Tested compatibility with WP 3.8
+
+### 0.3 ###
+
+Compatibility with 'WP FB AutoConnect Premium' and 'CiviCRM WordPress Profile Sync' plugins
 
 ### 0.2 ###
 

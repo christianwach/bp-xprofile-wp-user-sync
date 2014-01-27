@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: buddypress, xprofile, profile, sync
 Requires at least: 3.5
 Tested up to: 3.8
-Stable tag: 0.4
+Stable tag: 0.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,7 +14,7 @@ BP XProfile WordPress User Sync replaces the default BuddyPress XProfile 'Name' 
 
 == Description ==
 
-The BP XProfile WordPress User Sync plugin is useful when you have a BuddyPress network in which you want users to enter values for First Name and Last Name rather than rely on the more freeform default Name field that BuddyPress provides.
+The BP XProfile WordPress User Sync plugin is useful when you have a BuddyPress network in which you want to make sure that users enter values for First Name and Last Name rather than rely on the more freeform default Name field that BuddyPress provides.
 
 The plugin replaces the default BuddyPress XProfile Name field with two fields called (surprisingly) First Name and Last Name. These field values are kept in sync with the corresponding WordPress user profile fields as well as the BuddyPress XProfile Name field itself.
 
@@ -31,6 +31,10 @@ The plugin replaces the default BuddyPress XProfile Name field with two fields c
 
 
 == Changelog ==
+
+= 0.4.1 =
+
+Profile queries fixed when there are multiple profile groups - props WIBeditor
 
 = 0.4 =
 
