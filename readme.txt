@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: buddypress, xprofile, profile, sync
 Requires at least: 3.5
 Tested up to: 3.8
-Stable tag: 0.4.1
+Stable tag: 0.4.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -31,6 +31,10 @@ The plugin replaces the default BuddyPress XProfile Name field with two fields c
 
 
 == Changelog ==
+
+= 0.4.2 =
+
+Profile queries fixed when editing multiple profile groups - props WIBeditor
 
 = 0.4.1 =
 
