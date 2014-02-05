@@ -312,6 +312,66 @@ class BpXProfileWordPressUserSync {
 		
 		}
 		
+		// test for new BP xProfile admin screen
+		
+		// get buddypress instance
+		$bp = buddypress();
+		
+		// test for new BP_Members_Admin object
+		if( !is_null( $bp->profile->admin ) ) {
+			
+			// check which profile group is being queried
+			if ( 
+				
+				isset( $profile_template->groups ) AND
+				is_array( $profile_template->groups ) AND
+				count( $profile_template->groups ) > 0
+				
+			) {
+			
+				// don't want to pop, so loop through them
+				foreach( $profile_template->groups AS $group ) {
+				
+					// is this the base group?
+					if ( $group->id == 1 ) {
+					
+						// BP_XProfile_User_Admin queries prior to the loop, so do we have the fields populated? 
+						// see BP_XProfile_User_Admin->register_metaboxes()
+						if ( isset( $group->fields ) AND is_array( $group->fields ) ) {
+							
+							// get user ID
+							$user_id = intval( $_GET['user_id'] );
+							
+							// only edit other users profiles
+							if ( $user_id AND get_current_user_id() != $user_id ) {
+					
+								// query only group 1
+								$args['profile_group_id'] = 1;
+
+								// query only for this user
+								$args['user_id'] = $user_id;
+
+								// get field id from name
+								$fullname_field_id = xprofile_get_field_id_from_name( bp_xprofile_fullname_field_name() );
+		
+								// exclude name field
+								$args['exclude_fields'] = $fullname_field_id;
+							
+							}
+						
+						}
+		
+					}
+					
+					// only the first
+					break;
+				
+				}
+			
+			}
+			
+		}
+		
 		// do we need to recreate query?
 		if ( count( $args ) > 0 ) {
 
