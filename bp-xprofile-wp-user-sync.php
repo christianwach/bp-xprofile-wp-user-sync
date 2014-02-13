@@ -3,7 +3,7 @@
 --------------------------------------------------------------------------------
 Plugin Name: BP XProfile WordPress User Sync
 Description: Map BuddyPress XProfile fields to WordPress User fields. <strong>Note:</strong> because there is no way to hide XProfile fields, all data associated with this plugin will be lost when it is deactivated.
-Version: 0.4.2
+Version: 0.4.3
 Author: Christian Wach
 Author URI: http://haystack.co.uk
 Plugin URI: http://haystack.co.uk
