@@ -318,7 +318,7 @@ class BpXProfileWordPressUserSync {
 		$bp = buddypress();
 		
 		// test for new BP_Members_Admin object
-		if( !is_null( $bp->profile->admin ) ) {
+		if( isset( $bp->profile->admin ) ) {
 			
 			// check which profile group is being queried
 			if ( 
