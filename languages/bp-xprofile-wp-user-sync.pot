@@ -1,14 +1,14 @@
-# Copyright (C) 2013 BP XProfile WordPress User Sync
+# Copyright (C) 2014 BP XProfile WordPress User Sync
 # This file is distributed under the same license as the BP XProfile WordPress User Sync package.
 msgid ""
 msgstr ""
-"Project-Id-Version: BP XProfile WordPress User Sync 0.4\n"
+"Project-Id-Version: BP XProfile WordPress User Sync 0.4.3\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/bp-xprofile-wp-user-sync\n"
-"POT-Creation-Date: 2013-12-12 19:26:52+00:00\n"
+"POT-Creation-Date: 2014-02-13 00:22:42+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2013-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2014-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
@@ -20,11 +20,11 @@ msgstr ""
 msgid "Last Name"
 msgstr ""
 
-#: bp-xprofile-wp-user-sync.php:520
+#: bp-xprofile-wp-user-sync.php:619
 msgid "BP XProfile WordPress User Sync plugin: Could not create XProfile field"
 msgstr ""
 
-#: bp-xprofile-wp-user-sync.php:558
+#: bp-xprofile-wp-user-sync.php:657
 msgid "BP XProfile WordPress User Sync plugin: Could not set \"can_delete\" for XProfile field"
 msgstr ""
 #. Plugin Name of the plugin/theme
