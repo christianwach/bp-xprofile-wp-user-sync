@@ -298,8 +298,9 @@ class BpXProfileWordPressUserSync {
 			
 		}
 		
-		// if on registration page
-		if ( bp_is_register_page() ) {
+		// if user is not logged in
+        //and make sure that It is not for the view profile loop
+		if ( !is_user_logged_in() &&( !bp_is_user_profile() || bp_is_user_profile() && !did_action( 'bp_before_profile_loop_content' ) )  ) {
 		
 			// query only group 1
 			$args['profile_group_id'] = 1;
@@ -340,7 +341,7 @@ class BpXProfileWordPressUserSync {
 						if ( isset( $group->fields ) AND is_array( $group->fields ) ) {
 							
 							// get user ID
-							$user_id = intval( $_GET['user_id'] );
+							$user_id = isset( $_GET['user_id'] ) ? intval( $_GET['user_id'] ) : 0 ;
 							
 							// only edit other users profiles
 							if ( $user_id AND get_current_user_id() != $user_id ) {
