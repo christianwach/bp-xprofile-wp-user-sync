@@ -341,7 +341,7 @@ class BpXProfileWordPressUserSync {
 						if ( isset( $group->fields ) AND is_array( $group->fields ) ) {
 							
 							// get user ID
-							$user_id = intval( $_GET['user_id'] );
+							$user_id = isset( $_GET['user_id'] ) ? intval( $_GET['user_id'] ) : 0 ;
 							
 							// only edit other users profiles
 							if ( $user_id AND get_current_user_id() != $user_id ) {
