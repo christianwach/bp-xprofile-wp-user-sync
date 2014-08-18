@@ -298,8 +298,9 @@ class BpXProfileWordPressUserSync {
 			
 		}
 		
-		// if on registration page
-		if ( bp_is_register_page() ) {
+		// if user is not logged in
+        //and make sure that It is not for the view profile loop
+		if ( !is_user_logged_in() &&( !bp_is_user_profile() || bp_is_user_profile() && !did_action( 'bp_before_profile_loop_content' ) )  ) {
 		
 			// query only group 1
 			$args['profile_group_id'] = 1;
