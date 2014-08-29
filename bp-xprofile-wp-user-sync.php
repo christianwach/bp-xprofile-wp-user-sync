@@ -298,8 +298,18 @@ class BpXProfileWordPressUserSync {
 			
 		}
 		
-		// if on registration page
-		if ( bp_is_register_page() ) {
+		// determine if we are currently in the profile display loop
+		$in_loop = false;
+		if ( isset( $profile_template->in_the_loop ) AND $profile_template->in_the_loop === true ) {
+			$in_loop = true;
+		}
+
+		/**
+		 * Apply to registration form whichever page it is displayed on, whilst avoiding 
+		 * splitting the Name field into First Name and Last Name fields in the profile 
+		 * display loop of the user. Props https://github.com/sbrajesh
+		 */
+		if ( ! is_user_logged_in() AND ( ! bp_is_user_profile() OR bp_is_user_profile() AND ! $in_loop ) ) {
 		
 			// query only group 1
 			$args['profile_group_id'] = 1;
