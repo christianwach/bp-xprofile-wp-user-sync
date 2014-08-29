@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: buddypress, xprofile, profile, sync
 Requires at least: 3.5
 Tested up to: 3.9
-Stable tag: 0.4.4
+Stable tag: 0.4.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -31,6 +31,14 @@ The plugin replaces the default BuddyPress XProfile Name field with two fields c
 
 
 == Changelog ==
+
+= 0.4.5 =
+
+Allow field substitution in registration form regardless of location
+
+= 0.4.4 =
+
+Update plugin compatibility flags
 
 = 0.4.3 =
 
