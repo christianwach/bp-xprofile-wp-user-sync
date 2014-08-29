@@ -49,7 +49,8 @@ class BpXProfileWordPressUserSync {
 	
 	
 	/** 
-	 * @description: initialises this object
+	 * Initialises this object
+	 * 
 	 * @return object
 	 */
 	function __construct() {
@@ -71,9 +72,9 @@ class BpXProfileWordPressUserSync {
 	
 	
 	/** 
-	 * @description: loads translation, if present
-	 * @todo: 
-	 *
+	 * Loads translation, if present
+	 * 
+	 * @return void
 	 */
 	function translation() {
 		
@@ -105,8 +106,9 @@ class BpXProfileWordPressUserSync {
 	
 	
 	/**
-	 * @description: insert xprofile fields for first and last name
-	 * @return array
+	 * Insert xProfile fields for First Name and Last Name
+	 * 
+	 * @return void
 	 */
 	public function activate() {
 	
@@ -164,8 +166,9 @@ class BpXProfileWordPressUserSync {
 	
 	
 	/**
-	 * @description: actions to perform on plugin deactivation (NOT deletion)
-	 * @return nothing
+	 * Actions to perform on plugin deactivation (NOT deletion)
+	 * 
+	 * @return void
 	 */
 	public function deactivate() {
 		
@@ -195,8 +198,9 @@ class BpXProfileWordPressUserSync {
 	
 		
 	/**
-	 * @description: actions to perform on plugin init
-	 * @return nothing
+	 * Actions to perform on plugin init
+	 * 
+	 * @return void
 	 */
 	public function register_hooks() {
 	
@@ -221,7 +225,8 @@ class BpXProfileWordPressUserSync {
 	
 		
 	/**
-	 * @description: intercept xprofile query process and manage display of fields
+	 * Intercept xprofile query process and manage display of fields
+	 * 
 	 * @param boolean $has_groups
 	 * @param object $profile_template
 	 * @return boolean $has_groups
@@ -383,14 +388,16 @@ class BpXProfileWordPressUserSync {
 	
 	
 	/**
-	 * @description: intercept WP user registration and update process and populate our fields.
+	 * Intercept WP user registration and update process and populate our fields.
+	 * 
 	 * However, BuddyPress updates the "Name" field before wp_insert_user or wp_update_user get
 	 * called - it hooks into 'user_profile_update_errors' instead. So, there are two options:
 	 * either hook into the same action or call the same function below. Until I raise this as
 	 * an issue (ie, why do database operations via an action designed to collate errors) I'll
 	 * temporarily call the same function.
+	 * 
 	 * @param integer $user_id
-	 * @return nothing
+	 * @return void
 	 */
 	public function intercept_wp_user_update( $user_id ) {
 
@@ -475,11 +482,12 @@ class BpXProfileWordPressUserSync {
 
 
 	/**
-	 * @description: intercept BP core's attempt to sync to WP user profile
+	 * Intercept BP core's attempt to sync to WP user profile
+	 * 
 	 * @param integer $user_id
 	 * @param array $posted_field_ids
 	 * @param boolean $errors
-	 * @return nothing
+	 * @return void
 	 */
 	public function intercept_wp_profile_sync( $user_id = 0, $posted_field_ids, $errors ) {
 		
@@ -521,7 +529,8 @@ class BpXProfileWordPressUserSync {
 
 
 	/**
-	 * @description: compatibility with "WP FB AutoConnect Premium"
+	 * Compatibility with "WP FB AutoConnect Premium"
+	 * 
 	 * @param array $facebook_user
 	 * @return array $facebook_user
 	 */
@@ -564,9 +573,10 @@ class BpXProfileWordPressUserSync {
 	
 	
 	/**
-	 * @description: create a field with a given name
+	 * Create a field with a given name
+	 * 
 	 * @param string $field_name
-	 * @return integer $field_id on success, false on failure
+	 * @return integer $field_id True on success, false on failure
 	 */
 	private function _create_field( $field_name ) {
 	
@@ -680,7 +690,7 @@ register_activation_hook( __FILE__, array( $bp_xprofile_wordpress_user_sync, 'ac
 // deactivation
 register_deactivation_hook( __FILE__, array( $bp_xprofile_wordpress_user_sync, 'deactivate' ) );
 
-// uninstall will use the 'uninstall.php' method when XProfile fields can be "deactivated"
+// uninstall will use the 'uninstall.php' method when xProfile fields can be "deactivated"
 // see: http://codex.wordpress.org/Function_Reference/register_uninstall_hook
 
 
