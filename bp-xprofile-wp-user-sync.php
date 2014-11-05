@@ -298,6 +298,9 @@ class BpXProfileWordPressUserSync {
 		// screens and exclude our fields on profile view screen
 		add_filter( 'bp_has_profile', array( $this, 'intercept_profile_query' ), 30, 2 );
 		
+		// exclude the default name field type on profile fields admin screen
+		add_filter( 'bp_xprofile_get_groups', array( $this, 'intercept_profile_fields_query' ), 30, 2 );
+		
 		// populate our fields on user registration and update by admins
 		add_action( 'user_register', array( $this, 'intercept_wp_user_update' ), 30, 1 );
 		add_action( 'profile_update', array( $this, 'intercept_wp_user_update' ), 30, 1 );
@@ -473,6 +476,34 @@ class BpXProfileWordPressUserSync {
 		// --<
 		return $has_groups;
 	
+	}
+	
+	
+	
+	/**
+	 * Intercept xprofile query process and manage display of fields
+	 * 
+	 * @param array $groups The xProfile groups
+	 * @param array $args The arguments
+	 * @return void
+	 */
+	public function intercept_profile_fields_query( $groups, $args ) {
+		
+		// bail if not in admin
+		if ( ! is_admin() ) return $groups;
+		
+		// get field id from name
+		$fullname_field_id = xprofile_get_field_id_from_name( bp_xprofile_fullname_field_name() );
+	
+		// exclude name field
+		$args['exclude_fields'] = $fullname_field_id;
+		
+		// re-query the groups
+		$groups = BP_XProfile_Group::get( $args );
+		
+		// --<
+		return $groups;
+		
 	}
 	
 	
