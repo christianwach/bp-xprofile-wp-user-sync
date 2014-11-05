@@ -57,6 +57,7 @@ class BpXProfileWordPressUserSync {
 	
 		// get options array, if it exists
 		$this->options = get_option( 'bp_xp_wp_sync_options', array() );
+		//print_r( $this->options ); die();
 		
 		// add action for plugin init
 		add_action( 'bp_init', array( $this, 'register_hooks' ) );
@@ -111,56 +112,115 @@ class BpXProfileWordPressUserSync {
 	 * @return void
 	 */
 	public function activate() {
-	
-		// are we re-activating?
-		if ( get_option( 'bp_xp_wp_sync_installed', 'false' ) === 'true' ) {
 		
-			// yes, kick out
-			return;
+		// are we re-activating?
+		$reactivating = ( get_option( 'bp_xp_wp_sync_installed', 'false' ) === 'true' ) ? true : false;
+		
+		// before we create our fields, test if we're reactivating...
+		if ( $reactivating ) {
 			
+			// yes, get existing field data
+			$existing_fields = get_option( 'bp_xp_wp_sync_options_store', array() );
+			
+			// if we're reactivating after an upgrade from a version that does not
+			// have the code to salvage the connection between fields and data...
+			if ( empty( $existing_fields ) ) {
+				
+				// hmm...
+				
+			} else {
+			
+				// first name field
+				$existing_first_name_field_id = $existing_fields[ 'first_name_field_id' ];
+				$existing_first_name_field_name = $existing_fields[ 'first_name_field_name' ];
+				$existing_first_name_field_desc = $existing_fields[ 'first_name_field_desc' ];
+				
+				// first name field
+				$existing_last_name_field_id = $existing_fields[ 'last_name_field_id' ];
+				$existing_last_name_field_name = $existing_fields[ 'last_name_field_name' ];
+				$existing_last_name_field_desc = $existing_fields[ 'last_name_field_desc' ];
+				
+			}
+		
 		}
 		
 		
 		
-		// insert first_name field if it doesn't exist
-		if ( !isset( $this->options[ 'first_name_field_id' ] ) ) {
+		// "First Name" field
 		
-			// set field name
-			$name = __( 'First Name', 'bp-xprofile-wordpress-user-sync' );
+		// set field name
+		$name = __( 'First Name', 'bp-xprofile-wordpress-user-sync' );
+		if ( isset( $existing_first_name_field_name ) ) {
+			$name = $existing_first_name_field_name;
+		}
 		
-			// get id of field
-			$first_name_field_id = $this->_create_field( $name );
+		// set field description
+		$description = '';
+		if ( isset( $existing_first_name_field_desc ) ) {
+			$description = $existing_first_name_field_desc;
+		}
+		
+		// get id of field
+		$first_name_field_id = $this->_create_field( $name, $description );
+		
+		
+		
+		// "Last Name" field
+		
+		// set field name
+		$name = __( 'Last Name', 'bp-xprofile-wordpress-user-sync' );
+		if ( isset( $existing_last_name_field_name ) ) {
+			$name = $existing_last_name_field_name;
+		}
+		
+		// set field description
+		$description = '';
+		if ( isset( $existing_last_name_field_desc ) ) {
+			$description = $existing_last_name_field_desc;
+		}
+		
+		// get id of field
+		$last_name_field_id = $this->_create_field( $name, $description );
+		
+		
+		
+		// are we re-activating?
+		if ( $reactivating ) {
 			
+			// reconnect data to fields
+			$this->_reconnect_field( $existing_first_name_field_id, $first_name_field_id );
+			$this->_reconnect_field( $existing_last_name_field_id, $last_name_field_id );
+			
+			// delete storage array
+			delete_option( 'bp_xp_wp_sync_options_store' );
+			
+			// add to options
+			$this->options[ 'first_name_field_id' ] = $existing_first_name_field_id;
+			$this->options[ 'last_name_field_id' ] = $existing_last_name_field_id;
+			
+			// update options array
+			update_option( 'bp_xp_wp_sync_options', $this->options );
+		
+		} else {
+		
 			// add to options
 			$this->options[ 'first_name_field_id' ] = $first_name_field_id;
-		
-		}
-		
-		
-		
-		// insert last_name field if it doesn't exist
-		if ( !isset( $this->options[ 'last_name_field_id' ] ) ) {
-		
-			// set field name
-			$name = __( 'Last Name', 'bp-xprofile-wordpress-user-sync' );
-		
-			// get id of field
-			$last_name_field_id = $this->_create_field( $name );
-		
-			// add to options
 			$this->options[ 'last_name_field_id' ] = $last_name_field_id;
+			
+			// save options array
+			add_option( 'bp_xp_wp_sync_options', $this->options );
 		
+			/**
+			 * Set installed flag
+			 *
+			 * We can't retain fields when the plugin is deactivated, but the field
+			 * data does survive and we'll try and reconnect it when the plugin is
+			 * reactivated.
+			 */
+			add_option( 'bp_xp_wp_sync_installed', 'true' );
+			
 		}
 		
-		
-		
-		// save options array
-		add_option( 'bp_xp_wp_sync_options', $this->options );
-		
-		// set installed flag - redundant, given that we can't retain data when
-		// the plugin is deactivated
-		add_option( 'bp_xp_wp_sync_installed', 'true' );
-
 	}
 	
 	
@@ -172,27 +232,68 @@ class BpXProfileWordPressUserSync {
 	 */
 	public function deactivate() {
 		
-		// there seems to be no way to hide the xprofile fields once they have
-		// been created, so we're left with no option but to lose the data when
-		// we deactivate the plugin :-(
-
-		// we can't use the API because we can't set 'can_delete' in BP 1.7
-		// so we bypass it and manipulate the field directly
-
-		// delete first_name xprofile field
+		/**
+		 * There seems to be no way to hide the xProfile fields once they have
+		 * been created, so we're left with no option but to lose the data when
+		 * we deactivate the plugin :-(
+		 *
+		 * The 'bp_xp_wp_sync_options_store' option is an attempt at a workaround
+		 * but will not work if an older version of the plugin is deactivated and
+		 * a newer one is then activated, since no bridging data will have been
+		 * saved. Have updated the readme to flag this.
+		 *
+		 * Also, we can't use BP's API because we can't set 'can_delete' in BP 1.7
+		 * so we bypass it and manipulate the field directly
+		 */
+		
+		// init storage array
+		$options = array();
+		
+		// get first_name xProfile field
 		$field = new BP_XProfile_Field( $this->options[ 'first_name_field_id' ] );
+		
+		// store data about first name field
+		$options['first_name_field_id'] = $field->id;
+		$options['first_name_field_name'] = $field->name;
+		$options['first_name_field_desc'] = $field->description;
+		
+		// delete first_name xProfile field
 		$field->can_delete = 1;
 		$field->delete();
-	
-		// delete last_name xprofile field
+		
+		// get last_name xProfile field
 		$field = new BP_XProfile_Field( $this->options[ 'last_name_field_id' ] );
+		
+		// store data about first name field
+		$options['last_name_field_id'] = $field->id;
+		$options['last_name_field_name'] = $field->name;
+		$options['last_name_field_desc'] = $field->description;
+		
+		// delete last_name xProfile field
 		$field->can_delete = 1;
 		$field->delete();
-	
-		// now delete options
+		
+		// save our storage array
+		add_option( 'bp_xp_wp_sync_options_store', $options );
+		
+		// delete our options array
 		delete_option( 'bp_xp_wp_sync_options' );
+		/*
+		delete_option( 'bp_xp_wp_sync_options_store' );
 		delete_option( 'bp_xp_wp_sync_installed' );
-
+		*/
+		
+	}
+	
+	
+		
+	/**
+	 * Actions to perform on plugin reactivation
+	 * 
+	 * @return void
+	 */
+	public function reactivate() {
+		
 	}
 	
 	
@@ -204,8 +305,8 @@ class BpXProfileWordPressUserSync {
 	 */
 	public function register_hooks() {
 	
-		// exclude the default name field type on proflie edit and registration 
-		// screens and exclude our fields on proflie view screen
+		// exclude the default name field type on profile edit and registration 
+		// screens and exclude our fields on profile view screen
 		add_filter( 'bp_has_profile', array( $this, 'intercept_profile_query' ), 30, 2 );
 		
 		// populate our fields on user registration and update by admins
@@ -223,7 +324,7 @@ class BpXProfileWordPressUserSync {
 	}
 	
 	
-		
+	
 	/**
 	 * Intercept xprofile query process and manage display of fields
 	 * 
@@ -575,10 +676,11 @@ class BpXProfileWordPressUserSync {
 	/**
 	 * Create a field with a given name
 	 * 
-	 * @param string $field_name
-	 * @return integer $field_id True on success, false on failure
+	 * @param str $field_name The name of the field
+	 * @param str $field_description The field description
+	 * @return int $field_id True on success, false on failure
 	 */
-	private function _create_field( $field_name ) {
+	private function _create_field( $field_name, $field_description = '' ) {
 	
 		// common field attributes
 
@@ -595,7 +697,7 @@ class BpXProfileWordPressUserSync {
 		$name = $field_name;
 		
 		// description
-		$description = '';
+		$description = $field_description;
 		
 		// required (note: super admins can always edit)
 		$is_required = 1;
@@ -668,6 +770,69 @@ class BpXProfileWordPressUserSync {
 		// --<
 		return $field_id;
 		
+	}
+	
+	
+	
+	/**
+	 * Update a field with a given ID
+	 *
+	 * The idea here is to try and reconnect the "orphaned" field data with the
+	 * field definition by changing the auto-incremented ID of the field back to
+	 * its original value. This should work because the original value should not
+	 * have been reused unless the table has been truncated and the auto-increment
+	 * value reset.
+	 * 
+	 * @param int $old_field_id The previous ID of the field
+	 * @param int $new_field_id The new ID of the field
+	 * @return bool True if update successful
+	 */
+	private function _reconnect_field( $old_field_id, $new_field_id ) {
+	
+		// we'll need these to manually update
+		global $wpdb, $bp;
+		
+		// check if old field exists
+		$field = new BP_XProfile_Field( $old_field_id );
+		
+		// if it does, we've got a bigger problem...
+		if ( isset( $field->id ) AND $field->id == $old_field_id ) {
+		
+			// construct message
+			$msg = __( 
+				'BP XProfile WordPress User Sync plugin: An xProfile field with that ID already exists. Cannot reconnect data.', 
+				'bp-xprofile-wordpress-user-sync'
+			);
+		
+			// use var_dump as this seems to display in the iframe
+			var_dump( $msg ); die();
+		
+		}
+		
+		// construct query
+		$sql = $wpdb->prepare( 
+			"UPDATE {$bp->profile->table_name_fields} SET id = %d WHERE id = %d", 
+			$old_field_id,
+			$new_field_id
+		);
+		
+		// we must have one row affected
+		if ( $wpdb->query( $sql ) !== 1 ) {
+		
+			// construct message
+			$msg = __( 
+				'BP XProfile WordPress User Sync plugin: Could not update "ID" for xProfile field. SQL = ' . $sql, 
+				'bp-xprofile-wordpress-user-sync'
+			);
+		
+			// use var_dump as this seems to display in the iframe
+			var_dump( $msg ); die();
+		
+		}
+		
+		// --<
+		return true;
+			
 	}
 	
 	
