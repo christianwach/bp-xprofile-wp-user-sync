@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BP XProfile WordPress User Sync 0.5\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/bp-xprofile-wp-user-sync\n"
-"POT-Creation-Date: 2014-11-05 14:28:38+00:00\n"
+"POT-Creation-Date: 2014-11-05 14:42:51+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -20,15 +20,15 @@ msgstr ""
 msgid "Last Name"
 msgstr ""
 
-#: bp-xprofile-wp-user-sync.php:740
+#: bp-xprofile-wp-user-sync.php:736
 msgid "BP XProfile WordPress User Sync plugin: Could not create XProfile field"
 msgstr ""
 
-#: bp-xprofile-wp-user-sync.php:778
+#: bp-xprofile-wp-user-sync.php:774
 msgid "BP XProfile WordPress User Sync plugin: Could not set \"can_delete\" for XProfile field"
 msgstr ""
 
-#: bp-xprofile-wp-user-sync.php:822
+#: bp-xprofile-wp-user-sync.php:818
 msgid "BP XProfile WordPress User Sync plugin: An xProfile field with that ID already exists. Cannot reconnect data."
 msgstr ""
 #. Plugin Name of the plugin/theme
@@ -36,11 +36,11 @@ msgid "BP XProfile WordPress User Sync"
 msgstr ""
 
 #. Plugin URI of the plugin/theme
-msgid "http://haystack.co.uk"
+msgid "https://github.com/christianwach/bp-xprofile-wp-user-sync"
 msgstr ""
 
 #. Description of the plugin/theme
-msgid "Map BuddyPress XProfile fields to WordPress User fields. <strong>Note:</strong> because there is no way to hide XProfile fields, all data associated with this plugin will be lost when it is deactivated."
+msgid "Map BuddyPress XProfile fields to WordPress User fields. <strong>Note:</strong> because there is no way to hide XProfile fields, all field definitions are deleted when it is deactivated. The plugin tries to reconnect on reactivation, but always backup before deactivating."
 msgstr ""
 
 #. Author of the plugin/theme
