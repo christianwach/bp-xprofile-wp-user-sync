@@ -278,10 +278,6 @@ class BpXProfileWordPressUserSync {
 		
 		// delete our options array
 		delete_option( 'bp_xp_wp_sync_options' );
-		/*
-		delete_option( 'bp_xp_wp_sync_options_store' );
-		delete_option( 'bp_xp_wp_sync_installed' );
-		*/
 		
 	}
 	
