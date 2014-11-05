@@ -34,8 +34,8 @@ The plugin replaces the default BuddyPress XProfile Name field with two fields c
 
 = 0.5 =
 
-Reconnect field data to field definitions when plugin is reactivated
-Hides default name field from Profile Edit admin screen
+* Reconnect field data to field definitions when plugin is reactivated
+* Hides default name field from Profile Edit admin screen in BP 2.1+
 
 = 0.4.5 =
 
