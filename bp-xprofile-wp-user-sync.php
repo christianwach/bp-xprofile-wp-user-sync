@@ -288,17 +288,6 @@ class BpXProfileWordPressUserSync {
 	
 		
 	/**
-	 * Actions to perform on plugin reactivation
-	 * 
-	 * @return void
-	 */
-	public function reactivate() {
-		
-	}
-	
-	
-		
-	/**
 	 * Actions to perform on plugin init
 	 * 
 	 * @return void
