@@ -3,8 +3,8 @@ Contributors: needle
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8MZNB9D3PF48S
 Tags: buddypress, xprofile, profile, sync
 Requires at least: 3.5
-Tested up to: 3.9
-Stable tag: 0.4.5
+Tested up to: 4.0
+Stable tag: 0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -18,7 +18,7 @@ The BP XProfile WordPress User Sync plugin is useful when you have a BuddyPress 
 
 The plugin replaces the default BuddyPress XProfile Name field with two fields called (surprisingly) First Name and Last Name. These field values are kept in sync with the corresponding WordPress user profile fields as well as the BuddyPress XProfile Name field itself.
 
-**Please note:** because there is no way to hide XProfile fields, all data associated with this plugin will be lost when it is deactivated.
+**Please note:** because there is no way to hide XProfile fields, all field definitions associated with this plugin are deleted when it is deactivated. The field data itself is not deleted and the plugin makes an attempt to reconnect the existing data to the new field definitions when it is reactivated. Always back up your database before deactivating this plugin.
 
 
 
@@ -31,6 +31,11 @@ The plugin replaces the default BuddyPress XProfile Name field with two fields c
 
 
 == Changelog ==
+
+= 0.5 =
+
+Reconnect field data to field definitions when plugin is reactivated
+Hides default name field from Profile Edit admin screen
 
 = 0.4.5 =
 

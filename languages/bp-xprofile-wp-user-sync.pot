@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the BP XProfile WordPress User Sync package.
 msgid ""
 msgstr ""
-"Project-Id-Version: BP XProfile WordPress User Sync 0.4.5\n"
+"Project-Id-Version: BP XProfile WordPress User Sync 0.5\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/bp-xprofile-wp-user-sync\n"
-"POT-Creation-Date: 2014-08-29 12:15:16+00:00\n"
+"POT-Creation-Date: 2014-11-05 14:28:38+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -12,20 +12,24 @@ msgstr ""
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
-#: bp-xprofile-wp-user-sync.php:129
+#: bp-xprofile-wp-user-sync.php:152
 msgid "First Name"
 msgstr ""
 
-#: bp-xprofile-wp-user-sync.php:145
+#: bp-xprofile-wp-user-sync.php:171
 msgid "Last Name"
 msgstr ""
 
-#: bp-xprofile-wp-user-sync.php:618
+#: bp-xprofile-wp-user-sync.php:740
 msgid "BP XProfile WordPress User Sync plugin: Could not create XProfile field"
 msgstr ""
 
-#: bp-xprofile-wp-user-sync.php:656
+#: bp-xprofile-wp-user-sync.php:778
 msgid "BP XProfile WordPress User Sync plugin: Could not set \"can_delete\" for XProfile field"
+msgstr ""
+
+#: bp-xprofile-wp-user-sync.php:822
+msgid "BP XProfile WordPress User Sync plugin: An xProfile field with that ID already exists. Cannot reconnect data."
 msgstr ""
 #. Plugin Name of the plugin/theme
 msgid "BP XProfile WordPress User Sync"
