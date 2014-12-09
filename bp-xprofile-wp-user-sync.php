@@ -42,7 +42,7 @@ BpXProfileWordPressUserSync Class
 class BpXProfileWordPressUserSync {
 
 	/**
-	 * properties
+	 * Properties
 	 */
 
 	// plugin options
@@ -59,7 +59,6 @@ class BpXProfileWordPressUserSync {
 
 		// get options array, if it exists
 		$this->options = get_option( 'bp_xp_wp_sync_options', array() );
-		//print_r( $this->options ); die();
 
 		// add action for plugin init
 		add_action( 'bp_init', array( $this, 'register_hooks' ) );
@@ -109,7 +108,7 @@ class BpXProfileWordPressUserSync {
 
 
 	/**
-	 * Insert xProfile fields for First Name and Last Name
+	 * Insert xProfile fields for "First Name" and "Last Name"
 	 *
 	 * @return void
 	 */
@@ -316,7 +315,7 @@ class BpXProfileWordPressUserSync {
 
 
 	/**
-	 * Intercept xprofile query process and manage display of fields
+	 * Intercept xProfile query process and manage display of fields
 	 *
 	 * @param boolean $has_groups
 	 * @param object $profile_template
@@ -420,8 +419,11 @@ class BpXProfileWordPressUserSync {
 					// is this the base group?
 					if ( $group->id == 1 ) {
 
-						// BP_XProfile_User_Admin queries prior to the loop, so do we have the fields populated?
-						// see BP_XProfile_User_Admin->register_metaboxes()
+						/**
+						 * BP_XProfile_User_Admin queries prior to the loop, so
+						 * do we have the fields populated?
+						 * see BP_XProfile_User_Admin->register_metaboxes()
+						 */
 						if ( isset( $group->fields ) AND is_array( $group->fields ) ) {
 
 							// get user ID
@@ -564,8 +566,10 @@ class BpXProfileWordPressUserSync {
 				$last_name
 			);
 
-			// When XProfiles are updated, BuddyPress sets user nickname and display name
-			// so we should too...
+			/**
+			 * When XProfiles are updated, BuddyPress sets user nickname and display name
+			 * so we should too...
+			 */
 
 			// construct full name
 			$full_name = $first_name.' '.$last_name;
@@ -638,9 +642,11 @@ class BpXProfileWordPressUserSync {
 		$name = $first_name.' '.$last_name;
 		//print_r( array( 'name' => $name ) ); die();
 
-		// set default name field for this user - setting it now ensures that
-		// when xprofile_sync_wp_profile() is called, BuddyPress has the correct
-		// data to perform its updates with
+		/**
+		 * Set default name field for this user - setting it now ensures that
+		 * when xprofile_sync_wp_profile() is called, BuddyPress has the correct
+		 * data to perform its updates with
+		 */
 		xprofile_set_field_data( bp_xprofile_fullname_field_name(), $user_id, $name );
 
 	}
@@ -655,15 +661,13 @@ class BpXProfileWordPressUserSync {
 	 */
 	public function intercept_wp_fb_profile_sync( $facebook_user, $wp_user_id ) {
 
-		/*
-		------------------------------------------------------------------------
-		When XProfiles are updated, BuddyPress sets user nickname and display name
-		so WP FB AutoConnect Premium should do too. To do so, alter line 1315 or so:
-
-		//A filter so 3rd party plugins can process any extra fields they might need
-		$fbuser = apply_filters('wpfb_xprofile_fields_received', $fbuser, $args['WP_ID']);
-		------------------------------------------------------------------------
-		*/
+		/**
+		 * When XProfiles are updated, BuddyPress sets user nickname and display name
+		 * so WP FB AutoConnect Premium should do too. To do so, alter line 1315 or so:
+		 *
+		 * //A filter so 3rd party plugins can process any extra fields they might need
+		 * $fbuser = apply_filters('wpfb_xprofile_fields_received', $fbuser, $args['WP_ID']);
+		 */
 
 		// set user nickname
 		bp_update_user_meta( $wp_user_id, 'nickname', $facebook_user['name'] );
@@ -736,7 +740,7 @@ class BpXProfileWordPressUserSync {
 
 			// construct message
 			$msg = __(
-				'BP XProfile WordPress User Sync plugin: Could not create XProfile field',
+				'BP XProfile WordPress User Sync plugin: Could not create xProfile field',
 				'bp-xprofile-wp-user-sync'
 			);
 
@@ -774,7 +778,7 @@ class BpXProfileWordPressUserSync {
 
 				// construct message
 				$msg = __(
-					'BP XProfile WordPress User Sync plugin: Could not set "can_delete" for XProfile field',
+					'BP XProfile WordPress User Sync plugin: Could not set "can_delete" for xProfile field',
 					'bp-xprofile-wp-user-sync'
 				);
 
