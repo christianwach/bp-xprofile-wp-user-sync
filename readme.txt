@@ -32,6 +32,10 @@ The plugin replaces the default BuddyPress XProfile Name field with two fields c
 
 == Changelog ==
 
+= 0.5.1 =
+
+* Fix translation (props flegmatiq)
+
 = 0.5 =
 
 * Reconnect field data to field definitions when plugin is reactivated

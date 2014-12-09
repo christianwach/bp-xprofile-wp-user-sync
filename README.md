@@ -29,6 +29,15 @@ If you have cloned the code from GitHub, it is assumed that you know what you're
 
 ## Changelogs ##
 
+### 0.5.1 ###
+
+Fix translation (props flegmatiq)
+
+### 0.5 ###
+
+* Reconnect field data to field definitions when plugin is reactivated
+* Hides default name field from Profile Edit admin screen in BP 2.1+
+
 ### 0.4 ###
 
 Tested compatibility with WP 3.8
