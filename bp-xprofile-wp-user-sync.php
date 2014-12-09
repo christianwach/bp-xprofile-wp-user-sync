@@ -86,7 +86,7 @@ class BpXProfileWordPressUserSync {
 			load_plugin_textdomain(
 
 				// unique name
-				'bp-xprofile-wordpress-user-sync',
+				'bp-xprofile-wp-user-sync',
 
 				// deprecated argument
 				false,
@@ -149,7 +149,7 @@ class BpXProfileWordPressUserSync {
 		// "First Name" field
 
 		// set field name
-		$name = __( 'First Name', 'bp-xprofile-wordpress-user-sync' );
+		$name = __( 'First Name', 'bp-xprofile-wp-user-sync' );
 		if ( isset( $existing_first_name_field_name ) ) {
 			$name = $existing_first_name_field_name;
 		}
@@ -168,7 +168,7 @@ class BpXProfileWordPressUserSync {
 		// "Last Name" field
 
 		// set field name
-		$name = __( 'Last Name', 'bp-xprofile-wordpress-user-sync' );
+		$name = __( 'Last Name', 'bp-xprofile-wp-user-sync' );
 		if ( isset( $existing_last_name_field_name ) ) {
 			$name = $existing_last_name_field_name;
 		}
@@ -735,7 +735,7 @@ class BpXProfileWordPressUserSync {
 			// construct message
 			$msg = __(
 				'BP XProfile WordPress User Sync plugin: Could not create XProfile field',
-				'bp-xprofile-wordpress-user-sync'
+				'bp-xprofile-wp-user-sync'
 			);
 
 			// use var_dump as this seems to display in the iframe
@@ -773,7 +773,7 @@ class BpXProfileWordPressUserSync {
 				// construct message
 				$msg = __(
 					'BP XProfile WordPress User Sync plugin: Could not set "can_delete" for XProfile field',
-					'bp-xprofile-wordpress-user-sync'
+					'bp-xprofile-wp-user-sync'
 				);
 
 				// use var_dump as this seems to display in the iframe
@@ -817,7 +817,7 @@ class BpXProfileWordPressUserSync {
 			// construct message
 			$msg = __(
 				'BP XProfile WordPress User Sync plugin: An xProfile field with that ID already exists. Cannot reconnect data.',
-				'bp-xprofile-wordpress-user-sync'
+				'bp-xprofile-wp-user-sync'
 			);
 
 			// use var_dump as this seems to display in the iframe
@@ -838,7 +838,7 @@ class BpXProfileWordPressUserSync {
 			// construct message
 			$msg = __(
 				'BP XProfile WordPress User Sync plugin: Could not update "ID" for xProfile field. SQL = ' . $sql,
-				'bp-xprofile-wordpress-user-sync'
+				'bp-xprofile-wp-user-sync'
 			);
 
 			// use var_dump as this seems to display in the iframe
