@@ -291,9 +291,19 @@ class BpXProfileWordPressUserSync {
 	 */
 	public function register_hooks() {
 
-		// exclude the default name field type on profile edit and registration
-		// screens and exclude our fields on profile view screen
-		add_filter( 'bp_has_profile', array( $this, 'intercept_profile_query' ), 30, 2 );
+		// do we have a version of BuddyPress capable of pre-filtering?
+		if ( function_exists( 'bp_parse_args' ) ) {
+
+			// use bp_parse_args post-parse filter
+			add_filter( 'bp_after_has_profile_parse_args', array( $this, 'intercept_profile_query_args' ), 30, 1 );
+
+		} else {
+
+			// exclude the default name field type on profile edit and registration
+			// screens and exclude our fields on profile view screen
+			add_filter( 'bp_has_profile', array( $this, 'intercept_profile_query' ), 30, 2 );
+
+		}
 
 		// exclude the default name field type on profile fields admin screen
 		add_filter( 'bp_xprofile_get_groups', array( $this, 'intercept_profile_fields_query' ), 30, 2 );
@@ -309,6 +319,64 @@ class BpXProfileWordPressUserSync {
 
 		// compatibility with "WP FB AutoConnect Premium"
 		add_filter( 'wpfb_xprofile_fields_received', array( $this, 'intercept_wp_fb_profile_sync' ), 10, 2 );
+
+	}
+
+
+
+	/**
+	 * Intercept xProfile query process and manage display of fields
+	 *
+	 * @param array $args The existing arguments used to query for fields
+	 * @return array $args The modified arguments used to query for fields
+	 */
+	public function intercept_profile_query_args( $args ) {
+
+		// if on profile view screen
+		if ( bp_is_user_profile() AND ! bp_is_user_profile_edit() ) {
+
+			// exclude our xprofile fields
+			$args['exclude_fields'] = implode( ',', $this->options );
+
+		}
+
+		// if on profile edit screen
+		if ( bp_is_user_profile_edit() ) {
+
+			// get field id from name
+			$fullname_field_id = xprofile_get_field_id_from_name( bp_xprofile_fullname_field_name() );
+
+			// exclude name field
+			$args['exclude_fields'] = $fullname_field_id;
+
+		}
+
+		// determine if we are currently in the profile display loop
+		$in_loop = false;
+		if ( did_action( 'xprofile_template_loop_start' ) ) {
+			$in_loop = true;
+		}
+
+		/**
+		 * Apply to registration form whichever page it is displayed on, whilst avoiding
+		 * splitting the Name field into First Name and Last Name fields in the profile
+		 * display loop of the user. Props https://github.com/sbrajesh
+		 */
+		if ( ! is_user_logged_in() AND ( ! bp_is_user_profile() OR bp_is_user_profile() AND ! $in_loop ) ) {
+
+			// query only group 1
+			$args['profile_group_id'] = 1;
+
+			// get field id from name
+			$fullname_field_id = xprofile_get_field_id_from_name( bp_xprofile_fullname_field_name() );
+
+			// exclude name field
+			$args['exclude_fields'] = $fullname_field_id;
+
+		}
+
+		// --<
+		return $args;
 
 	}
 
