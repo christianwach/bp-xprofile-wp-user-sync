@@ -81,7 +81,7 @@ class BpXProfileWordPressUserSync {
 	function translation() {
 
 		// only use, if we have it...
-		if( function_exists('load_plugin_textdomain') ) {
+		if ( function_exists( 'load_plugin_textdomain' ) ) {
 
 			// not used, as there are no translations as yet
 			load_plugin_textdomain(
@@ -398,7 +398,7 @@ class BpXProfileWordPressUserSync {
 
 		// test for new BP xProfile admin screen
 
-		// get buddypress instance
+		// get BuddyPress instance
 		$bp = buddypress();
 
 		// test for new BP_Members_Admin object
@@ -567,7 +567,7 @@ class BpXProfileWordPressUserSync {
 			);
 
 			/**
-			 * When XProfiles are updated, BuddyPress sets user nickname and display name
+			 * When xProfiles are updated, BuddyPress sets user nickname and display name
 			 * so we should too...
 			 */
 
@@ -662,7 +662,7 @@ class BpXProfileWordPressUserSync {
 	public function intercept_wp_fb_profile_sync( $facebook_user, $wp_user_id ) {
 
 		/**
-		 * When XProfiles are updated, BuddyPress sets user nickname and display name
+		 * When xProfiles are updated, BuddyPress sets user nickname and display name
 		 * so WP FB AutoConnect Premium should do too. To do so, alter line 1315 or so:
 		 *
 		 * //A filter so 3rd party plugins can process any extra fields they might need
