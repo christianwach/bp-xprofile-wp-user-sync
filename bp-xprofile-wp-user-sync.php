@@ -397,8 +397,34 @@ class BpXProfileWordPressUserSync {
 		// if on profile view screen
 		if ( bp_is_user_profile() AND !bp_is_user_profile_edit() ) {
 
-			// exclude our xprofile fields
-			$args['exclude_fields'] = implode( ',', $this->options );
+			// comma-delimit our fields
+			$exclude_fields = implode( ',', $this->options );
+
+			/**
+			 * Exclude our xprofile fields, but allow filtering. All relevant params
+			 * are passed to the filter so that other plugins can make an informed
+			 * choice of what to return.
+			 *
+			 * To retain the first name and last name fields, an appropriate way to
+			 * do this would look something like:
+			 *
+			 * add_filter( 'bp_xprofile_wp_user_sync_exclude_fields', 'my_function' );
+			 * function my_function( $exclude_fields ) {
+			 *     return bp_xprofile_fullname_field_id();
+			 * }
+			 *
+			 * @param string $exclude_fields Comma-delimited pseudo-array of custom fields
+			 * @param array $options Array of custom field IDs
+			 * @param boolean $has_groups True if groups exist, false otherwise
+			 * @param object $profile_template The BuddyPress profile template object
+			 */
+			$args['exclude_fields'] = apply_filters(
+				'bp_xprofile_wp_user_sync_exclude_fields',
+				$exclude_fields,
+				$this->options,
+				$has_groups,
+				$profile_template
+			);
 
 		}
 
