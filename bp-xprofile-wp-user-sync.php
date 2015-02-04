@@ -294,7 +294,7 @@ class BpXProfileWordPressUserSync {
 		// do we have a version of BuddyPress capable of pre-filtering?
 		if ( function_exists( 'bp_parse_args' ) ) {
 
-			// use bp_parse_args post-parse filter
+			// use bp_parse_args post-parse filter (available since BP 2.0)
 			add_filter( 'bp_after_has_profile_parse_args', array( $this, 'intercept_profile_query_args' ), 30, 1 );
 
 		} else {
@@ -305,7 +305,7 @@ class BpXProfileWordPressUserSync {
 
 		}
 
-		// exclude the default name field type on profile fields admin screen
+		// exclude the default name field type on profile fields admin screen (available since BP 2.1)
 		add_filter( 'bp_xprofile_get_groups', array( $this, 'intercept_profile_fields_query' ), 30, 2 );
 
 		// populate our fields on user registration and update by admins
@@ -343,11 +343,8 @@ class BpXProfileWordPressUserSync {
 		// if on profile edit screen
 		if ( bp_is_user_profile_edit() ) {
 
-			// get field id from name
-			$fullname_field_id = xprofile_get_field_id_from_name( bp_xprofile_fullname_field_name() );
-
-			// exclude name field
-			$args['exclude_fields'] = $fullname_field_id;
+			// exclude name field (bp_xprofile_fullname_field_id is available since BP 2.0)
+			$args['exclude_fields'] = bp_xprofile_fullname_field_id();
 
 		}
 
@@ -367,11 +364,8 @@ class BpXProfileWordPressUserSync {
 			// query only group 1
 			$args['profile_group_id'] = 1;
 
-			// get field id from name
-			$fullname_field_id = xprofile_get_field_id_from_name( bp_xprofile_fullname_field_name() );
-
-			// exclude name field
-			$args['exclude_fields'] = $fullname_field_id;
+			// exclude name field (bp_xprofile_fullname_field_id is available since BP 2.0)
+			$args['exclude_fields'] = bp_xprofile_fullname_field_id();
 
 		}
 
@@ -586,11 +580,8 @@ class BpXProfileWordPressUserSync {
 		// bail if not in admin
 		if ( ! is_admin() ) return $groups;
 
-		// get field id from name
-		$fullname_field_id = xprofile_get_field_id_from_name( bp_xprofile_fullname_field_name() );
-
 		// exclude name field
-		$args['exclude_fields'] = $fullname_field_id;
+		$args['exclude_fields'] = bp_xprofile_fullname_field_id();
 
 		// re-query the groups
 		$groups = BP_XProfile_Group::get( $args );
