@@ -29,6 +29,10 @@ If you have cloned the code from GitHub, it is assumed that you know what you're
 
 ## Changelogs ##
 
+### 0.5.2 ###
+
+Pre-filter profile query when BP is sufficiently recent
+
 ### 0.5.1 ###
 
 Fix translation (props flegmatiq)
