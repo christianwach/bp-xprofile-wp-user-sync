@@ -81,7 +81,7 @@ class BpXProfileWordPressUserSync {
 	function translation() {
 
 		// only use, if we have it...
-		if( function_exists('load_plugin_textdomain') ) {
+		if ( function_exists( 'load_plugin_textdomain' ) ) {
 
 			// not used, as there are no translations as yet
 			load_plugin_textdomain(
@@ -291,11 +291,21 @@ class BpXProfileWordPressUserSync {
 	 */
 	public function register_hooks() {
 
-		// exclude the default name field type on profile edit and registration
-		// screens and exclude our fields on profile view screen
-		add_filter( 'bp_has_profile', array( $this, 'intercept_profile_query' ), 30, 2 );
+		// do we have a version of BuddyPress capable of pre-filtering?
+		if ( function_exists( 'bp_parse_args' ) ) {
 
-		// exclude the default name field type on profile fields admin screen
+			// use bp_parse_args post-parse filter (available since BP 2.0)
+			add_filter( 'bp_after_has_profile_parse_args', array( $this, 'intercept_profile_query_args' ), 30, 1 );
+
+		} else {
+
+			// exclude the default name field type on profile edit and registration
+			// screens and exclude our fields on profile view screen
+			add_filter( 'bp_has_profile', array( $this, 'intercept_profile_query' ), 30, 2 );
+
+		}
+
+		// exclude the default name field type on profile fields admin screen (available since BP 2.1)
 		add_filter( 'bp_xprofile_get_groups', array( $this, 'intercept_profile_fields_query' ), 30, 2 );
 
 		// populate our fields on user registration and update by admins
@@ -317,6 +327,57 @@ class BpXProfileWordPressUserSync {
 	/**
 	 * Intercept xProfile query process and manage display of fields
 	 *
+	 * @param array $args The existing arguments used to query for fields
+	 * @return array $args The modified arguments used to query for fields
+	 */
+	public function intercept_profile_query_args( $args ) {
+
+		// if on profile view screen
+		if ( bp_is_user_profile() AND ! bp_is_user_profile_edit() ) {
+
+			// get fields to exclude on profile view screen
+			$args['exclude_fields'] = $this->_get_excluded_fields();
+
+		}
+
+		// if on profile edit screen
+		if ( bp_is_user_profile_edit() ) {
+
+			// exclude name field (bp_xprofile_fullname_field_id is available since BP 2.0)
+			$args['exclude_fields'] = bp_xprofile_fullname_field_id();
+
+		}
+
+		/**
+		 * Apply to registration form whichever page it is displayed on, whilst avoiding
+		 * splitting the Name field into First Name and Last Name fields in the profile
+		 * display loop of the user. Note that we cannot determine if we are in the loop
+		 * prior to the query, so we test for an empty user ID instead.
+		 */
+		if (
+			! is_user_logged_in() // user must be logged out
+			AND
+			( ! bp_is_user_profile() OR ( bp_is_user_profile() AND empty( $args['user_id'] ) ) )
+		) {
+
+			// query only group 1
+			$args['profile_group_id'] = 1;
+
+			// exclude name field (bp_xprofile_fullname_field_id is available since BP 2.0)
+			$args['exclude_fields'] = bp_xprofile_fullname_field_id();
+
+		}
+
+		// --<
+		return $args;
+
+	}
+
+
+
+	/**
+	 * Intercept xProfile query process and manage display of fields
+	 *
 	 * @param boolean $has_groups
 	 * @param object $profile_template
 	 * @return boolean $has_groups
@@ -329,8 +390,8 @@ class BpXProfileWordPressUserSync {
 		// if on profile view screen
 		if ( bp_is_user_profile() AND !bp_is_user_profile_edit() ) {
 
-			// exclude our xprofile fields
-			$args['exclude_fields'] = implode( ',', $this->options );
+			// get fields to exclude on profile view screen
+			$args['exclude_fields'] = $this->_get_excluded_fields();
 
 		}
 
@@ -398,7 +459,7 @@ class BpXProfileWordPressUserSync {
 
 		// test for new BP xProfile admin screen
 
-		// get buddypress instance
+		// get BuddyPress instance
 		$bp = buddypress();
 
 		// test for new BP_Members_Admin object
@@ -492,11 +553,8 @@ class BpXProfileWordPressUserSync {
 		// bail if not in admin
 		if ( ! is_admin() ) return $groups;
 
-		// get field id from name
-		$fullname_field_id = xprofile_get_field_id_from_name( bp_xprofile_fullname_field_name() );
-
 		// exclude name field
-		$args['exclude_fields'] = $fullname_field_id;
+		$args['exclude_fields'] = bp_xprofile_fullname_field_id();
 
 		// re-query the groups
 		$groups = BP_XProfile_Group::get( $args );
@@ -567,7 +625,7 @@ class BpXProfileWordPressUserSync {
 			);
 
 			/**
-			 * When XProfiles are updated, BuddyPress sets user nickname and display name
+			 * When xProfiles are updated, BuddyPress sets user nickname and display name
 			 * so we should too...
 			 */
 
@@ -662,7 +720,7 @@ class BpXProfileWordPressUserSync {
 	public function intercept_wp_fb_profile_sync( $facebook_user, $wp_user_id ) {
 
 		/**
-		 * When XProfiles are updated, BuddyPress sets user nickname and display name
+		 * When xProfiles are updated, BuddyPress sets user nickname and display name
 		 * so WP FB AutoConnect Premium should do too. To do so, alter line 1315 or so:
 		 *
 		 * //A filter so 3rd party plugins can process any extra fields they might need
@@ -854,6 +912,44 @@ class BpXProfileWordPressUserSync {
 
 		// --<
 		return true;
+
+	}
+
+
+
+	/**
+	 * Get excluded fields on Profile View
+	 *
+	 * @param int $old_field_id The previous ID of the field
+	 * @param int $new_field_id The new ID of the field
+	 * @return bool True if update successful
+	 */
+	private function _get_excluded_fields() {
+
+		// comma-delimit our fields
+		$exclude_fields = implode( ',', $this->options );
+
+		/**
+		 * Exclude our xprofile fields, but allow filtering. The relevant params
+		 * are passed to the filter so that other plugins can make an informed
+		 * choice of what to return.
+		 *
+		 * To retain the first name and last name fields, an appropriate way to
+		 * do this would look something like:
+		 *
+		 * add_filter( 'bp_xprofile_wp_user_sync_exclude_fields', 'my_function' );
+		 * function my_function( $exclude_fields ) {
+		 *     return bp_xprofile_fullname_field_id();
+		 * }
+		 *
+		 * @param string $exclude_fields Comma-delimited pseudo-array of custom fields
+		 * @param array $options Array of custom field IDs
+		 */
+		return apply_filters(
+			'bp_xprofile_wp_user_sync_exclude_fields',
+			$exclude_fields,
+			$this->options
+		);
 
 	}
 
