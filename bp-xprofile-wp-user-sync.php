@@ -929,9 +929,7 @@ class BpXProfileWordPressUserSync {
 	/**
 	 * Get excluded fields on Profile View
 	 *
-	 * @param int $old_field_id The previous ID of the field
-	 * @param int $new_field_id The new ID of the field
-	 * @return bool True if update successful
+	 * @return string $exclude_fields Comma-separated list of field IDs
 	 */
 	private function _get_excluded_fields() {
 
