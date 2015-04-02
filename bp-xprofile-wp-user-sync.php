@@ -336,7 +336,10 @@ class BpXProfileWordPressUserSync {
 		if ( bp_is_user_profile() AND ! bp_is_user_profile_edit() ) {
 
 			// get fields to exclude on profile view screen
-			$args['exclude_fields'] = $this->_get_excluded_fields();
+			$exclude_fields = $this->_get_excluded_fields();
+
+			// merge with existing if populated
+			$args['exclude_fields'] = $this->_merge_excluded_fields( $args['exclude_fields'], $exclude_fields );
 
 		}
 
@@ -344,7 +347,10 @@ class BpXProfileWordPressUserSync {
 		if ( bp_is_user_profile_edit() ) {
 
 			// exclude name field (bp_xprofile_fullname_field_id is available since BP 2.0)
-			$args['exclude_fields'] = bp_xprofile_fullname_field_id();
+			$exclude_fields = bp_xprofile_fullname_field_id();
+
+			// merge with existing if populated
+			$args['exclude_fields'] = $this->_merge_excluded_fields( $args['exclude_fields'], $exclude_fields );
 
 		}
 
@@ -364,7 +370,10 @@ class BpXProfileWordPressUserSync {
 			$args['profile_group_id'] = 1;
 
 			// exclude name field (bp_xprofile_fullname_field_id is available since BP 2.0)
-			$args['exclude_fields'] = bp_xprofile_fullname_field_id();
+			$exclude_fields = bp_xprofile_fullname_field_id();
+
+			// merge with existing if populated
+			$args['exclude_fields'] = $this->_merge_excluded_fields( $args['exclude_fields'], $exclude_fields );
 
 		}
 
@@ -950,6 +959,33 @@ class BpXProfileWordPressUserSync {
 			$exclude_fields,
 			$this->options
 		);
+
+	}
+
+
+
+	/**
+	 * Merge excluded fields on Profile View
+	 *
+	 * @param string $excluded_fields Comma-delimited list of fields already excluded
+	 * @param string $exclude_fields Comma-delimited list of fields requiring exclusion
+	 * @return string $excluded_fields Comma-delimited list of all fields to be excluded
+	 */
+	private function _merge_excluded_fields( $excluded_fields, $exclude_fields ) {
+
+		// if params are not arrays already, convert them
+		if ( ! is_array( $excluded_fields ) ) $excluded_fields = explode( ',', $excluded_fields );
+		if ( ! is_array( $exclude_fields ) ) $exclude_fields = explode( ',', $exclude_fields );
+
+		// merge with existing if populated
+		if ( ! empty( $excluded_fields ) ) {
+			$excluded_fields = array_unique( array_merge( $excluded_fields, $exclude_fields ) );
+		} else {
+			$excluded_fields = $exclude_fields;
+		}
+
+		// --<
+		return implode( ',', $excluded_fields );
 
 	}
 
