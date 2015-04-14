@@ -29,6 +29,10 @@ If you have cloned the code from GitHub, it is assumed that you know what you're
 
 ## Changelogs ##
 
+### 0.5.3 ###
+
+Respect existing excluded fields during xProfile query process
+
 ### 0.5.2 ###
 
 Pre-filter profile query when BP is sufficiently recent
