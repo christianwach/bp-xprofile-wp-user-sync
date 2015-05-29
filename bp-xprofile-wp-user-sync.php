@@ -211,17 +211,17 @@ class BpXProfileWordPressUserSync {
 			$this->options[ 'first_name_field_id' ] = $first_name_field_id;
 			$this->options[ 'last_name_field_id' ] = $last_name_field_id;
 
-			// save options array
-			add_site_option( 'bp_xp_wp_sync_options', $this->options );
+			// safe save options array
+			update_site_option( 'bp_xp_wp_sync_options', $this->options );
 
 			/**
-			 * Set installed flag
+			 * Safe set installed flag
 			 *
 			 * We can't retain fields when the plugin is deactivated, but the field
 			 * data does survive and we'll try and reconnect it when the plugin is
 			 * reactivated.
 			 */
-			add_site_option( 'bp_xp_wp_sync_installed', 'true' );
+			update_site_option( 'bp_xp_wp_sync_installed', 'true' );
 
 		}
 
