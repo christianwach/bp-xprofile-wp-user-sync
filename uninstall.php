@@ -19,8 +19,8 @@ if ( !defined( 'WP_UNINSTALL_PLUGIN' ) ) { exit(); }
 
 
 // delete options
-delete_option( 'bp_xp_wp_sync_options' );
-delete_option( 'bp_xp_wp_sync_options_store' );
-delete_option( 'bp_xp_wp_sync_installed' );
+delete_site_option( 'bp_xp_wp_sync_options' );
+delete_site_option( 'bp_xp_wp_sync_options_store' );
+delete_site_option( 'bp_xp_wp_sync_installed' );
 
 

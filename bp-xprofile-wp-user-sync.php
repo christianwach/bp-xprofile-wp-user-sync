@@ -57,8 +57,11 @@ class BpXProfileWordPressUserSync {
 	 */
 	function __construct() {
 
+		// perform upgrades
+		$this->upgrade();
+
 		// get options array, if it exists
-		$this->options = get_option( 'bp_xp_wp_sync_options', array() );
+		$this->options = get_site_option( 'bp_xp_wp_sync_options', array() );
 
 		// add action for plugin init
 		add_action( 'bp_init', array( $this, 'register_hooks' ) );
@@ -115,13 +118,13 @@ class BpXProfileWordPressUserSync {
 	public function activate() {
 
 		// are we re-activating?
-		$reactivating = ( get_option( 'bp_xp_wp_sync_installed', 'false' ) === 'true' ) ? true : false;
+		$reactivating = ( get_site_option( 'bp_xp_wp_sync_installed', 'false' ) === 'true' ) ? true : false;
 
 		// before we create our fields, test if we're reactivating...
 		if ( $reactivating ) {
 
 			// yes, get existing field data
-			$existing_fields = get_option( 'bp_xp_wp_sync_options_store', array() );
+			$existing_fields = get_site_option( 'bp_xp_wp_sync_options_store', array() );
 
 			// if we're reactivating after an upgrade from a version that does not
 			// have the code to salvage the connection between fields and data...
@@ -193,14 +196,14 @@ class BpXProfileWordPressUserSync {
 			$this->_reconnect_field( $existing_last_name_field_id, $last_name_field_id );
 
 			// delete storage array
-			delete_option( 'bp_xp_wp_sync_options_store' );
+			delete_site_option( 'bp_xp_wp_sync_options_store' );
 
 			// add to options
 			$this->options[ 'first_name_field_id' ] = $existing_first_name_field_id;
 			$this->options[ 'last_name_field_id' ] = $existing_last_name_field_id;
 
 			// update options array
-			update_option( 'bp_xp_wp_sync_options', $this->options );
+			update_site_option( 'bp_xp_wp_sync_options', $this->options );
 
 		} else {
 
@@ -209,7 +212,7 @@ class BpXProfileWordPressUserSync {
 			$this->options[ 'last_name_field_id' ] = $last_name_field_id;
 
 			// save options array
-			add_option( 'bp_xp_wp_sync_options', $this->options );
+			add_site_option( 'bp_xp_wp_sync_options', $this->options );
 
 			/**
 			 * Set installed flag
@@ -218,7 +221,7 @@ class BpXProfileWordPressUserSync {
 			 * data does survive and we'll try and reconnect it when the plugin is
 			 * reactivated.
 			 */
-			add_option( 'bp_xp_wp_sync_installed', 'true' );
+			add_site_option( 'bp_xp_wp_sync_installed', 'true' );
 
 		}
 
@@ -275,10 +278,29 @@ class BpXProfileWordPressUserSync {
 		$field->delete();
 
 		// save our storage array
-		add_option( 'bp_xp_wp_sync_options_store', $options );
+		add_site_option( 'bp_xp_wp_sync_options_store', $options );
 
 		// delete our options array
-		delete_option( 'bp_xp_wp_sync_options' );
+		delete_site_option( 'bp_xp_wp_sync_options' );
+
+	}
+
+
+
+	/**
+	 * Maybe upgrade plugin
+	 *
+	 * @since 0.6
+	 *
+	 * @return void
+	 */
+	public function upgrade() {
+
+		// upgrade options?
+		$this->_maybe_migrate_options();
+
+		// upgrade version?
+		$this->_maybe_update_version();
 
 	}
 
@@ -989,9 +1011,105 @@ class BpXProfileWordPressUserSync {
 
 
 
+	/**
+	 * Check if the plugin is greater than 0.5.3.
+	 *
+	 * We need to migrate the options from the blog to the network, if this is
+	 * multisite and they haven't already been migrated.
+	 *
+	 * @since 0.6
+	 *
+	 * @return void
+	 */
+	private function _maybe_migrate_options() {
+
+		// bail if not multisite
+		if ( ! is_multisite() ) return;
+
+		// bail if our plugin isn't network-activated
+		if ( ! $this->_is_active_sitewide() ) return;
+
+		// test for new network option
+		$version = get_site_option( 'bp_xp_wp_sync_version', '' );
+
+		// bail if it's already populated (we must already be at 0.6 or greater)
+		if ( $version != '' ) return;
+
+		// save version as new network option
+		$version = add_site_option( 'bp_xp_wp_sync_version', BP_XPROFILE_WP_USER_SYNC_VERSION );
+
+		// now migrate plugin options from blog to network
+
+		// get existing options array
+		$options = get_option( 'bp_xp_wp_sync_options', array() );
+
+		// save as network option
+		add_site_option( 'bp_xp_wp_sync_options', $options );
+
+		// delete existing blog option
+		delete_option( 'bp_xp_wp_sync_options' );
+
+		// get installed flag
+		$flag = get_site_option( 'bp_xp_wp_sync_installed', 'false' );
+
+		// save flag as network option
+		add_site_option( 'bp_xp_wp_sync_installed', $flag );
+
+		// delete existing blog option
+		delete_option( 'bp_xp_wp_sync_installed' );
+
+	}
+
+
+
+	/**
+	 * Check if the plugin's stored version number needs updating
+	 *
+	 * @since 0.6
+	 *
+	 * @return void
+	 */
+	private function _maybe_update_version() {
+
+		// get version
+		$version = get_site_option( 'bp_xp_wp_sync_version', '' );
+
+		// bail if it's current
+		if ( $version == BP_XPROFILE_WP_USER_SYNC_VERSION ) return;
+
+		// update version (or create it if it doesn't exist)
+		update_site_option( 'bp_xp_wp_sync_version', BP_XPROFILE_WP_USER_SYNC_VERSION );
+
+	}
+
+
+
+	/**
+	 * Utility that checks if this plugin is active sitewide
+	 *
+	 * @since 0.6
+	 *
+	 * @return bool Whether or not the plugin is network-activated
+	 */
+	private function _is_active_sitewide() {
+
+		// get base plugin path
+		$plugin = plugin_basename( BP_XPROFILE_WP_USER_SYNC_FILE );
+
+		// get sitewide plugins
+		$active_plugins = (array) get_site_option( 'active_sitewide_plugins' );
+
+		// is the plugin network activated?
+		if ( isset( $active_plugins[$plugin] ) ) return true;
+
+		// nope
+		return false;
+
+	}
+
+
+
 } // class ends
-
-
 
 
 
@@ -1009,8 +1127,5 @@ register_deactivation_hook( __FILE__, array( $bp_xprofile_wordpress_user_sync, '
 
 // uninstall will use the 'uninstall.php' method when xProfile fields can be "deactivated"
 // see: http://codex.wordpress.org/Function_Reference/register_uninstall_hook
-
-
-
 
 
