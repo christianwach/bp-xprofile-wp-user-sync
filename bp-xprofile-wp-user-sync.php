@@ -849,8 +849,13 @@ class BpXProfileWordPressUserSync {
 		// Fixed in BuddyPress 1.9, but leave the check below for older versions
 		$field = new BP_XProfile_Field( $field_id );
 
+		error_log( print_r( array(
+			'method' => '_create_field',
+			'field' => $field,
+		), true ) );
+
 		// let's see if our new field is correctly set
-		if ( $field->can_delete !== 0 ) {
+		if ( $field->can_delete != 0 ) {
 
 			// we'll need these to manually update, because the API can't do it
 			global $wpdb, $bp;
@@ -866,10 +871,10 @@ class BpXProfileWordPressUserSync {
 			if ( $wpdb->query( $sql ) !== 1 ) {
 
 				// construct message
-				$msg = __(
-					'BP XProfile WordPress User Sync plugin: Could not set "can_delete" for xProfile field',
+				$msg = sprintf( __(
+					'BP XProfile WordPress User Sync plugin: Could not set "can_delete" for xProfile field SQL = %s',
 					'bp-xprofile-wp-user-sync'
-				);
+				), $sql );
 
 				// use var_dump as this seems to display in the iframe
 				var_dump( $msg ); die();
@@ -931,10 +936,10 @@ class BpXProfileWordPressUserSync {
 		if ( $wpdb->query( $sql ) !== 1 ) {
 
 			// construct message
-			$msg = __(
-				'BP XProfile WordPress User Sync plugin: Could not update "ID" for xProfile field. SQL = ' . $sql,
+			$msg = sprintf( __(
+				'BP XProfile WordPress User Sync plugin: Could not update "ID" for xProfile field. SQL = %s',
 				'bp-xprofile-wp-user-sync'
-			);
+			), $sql );
 
 			// use var_dump as this seems to display in the iframe
 			var_dump( $msg ); die();
@@ -1050,7 +1055,7 @@ class BpXProfileWordPressUserSync {
 		delete_option( 'bp_xp_wp_sync_options' );
 
 		// get installed flag
-		$flag = get_site_option( 'bp_xp_wp_sync_installed', 'false' );
+		$flag = get_option( 'bp_xp_wp_sync_installed', 'false' );
 
 		// save flag as network option
 		add_site_option( 'bp_xp_wp_sync_installed', $flag );
