@@ -29,6 +29,10 @@ If you have cloned the code from GitHub, it is assumed that you know what you're
 
 ## Changelogs ##
 
+### 0.6 ###
+
+Migrate options from blog to network if plugin is network-activated
+
 ### 0.5.3 ###
 
 Respect existing excluded fields during xProfile query process
