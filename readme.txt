@@ -20,6 +20,10 @@ The plugin replaces the default BuddyPress XProfile Name field with two fields c
 
 **Please note:** because there is no way to hide XProfile fields, all field definitions associated with this plugin are deleted when it is deactivated. The field data itself is not deleted and the plugin makes an attempt to reconnect the existing data to the new field definitions when it is reactivated. Always back up your database before deactivating this plugin.
 
+### Plugin Development
+
+This plugin is in active development. For feature requests and bug reports (or if you're a plugin author and want to contribute) please visit the plugin's [GitHub repository](https://github.com/christianwach/bp-xprofile-wp-user-sync).
+
 
 
 == Installation ==
