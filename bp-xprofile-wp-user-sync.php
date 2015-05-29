@@ -849,11 +849,6 @@ class BpXProfileWordPressUserSync {
 		// Fixed in BuddyPress 1.9, but leave the check below for older versions
 		$field = new BP_XProfile_Field( $field_id );
 
-		error_log( print_r( array(
-			'method' => '_create_field',
-			'field' => $field,
-		), true ) );
-
 		// let's see if our new field is correctly set
 		if ( $field->can_delete != 0 ) {
 
