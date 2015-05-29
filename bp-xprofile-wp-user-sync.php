@@ -1049,6 +1049,20 @@ class BpXProfileWordPressUserSync {
 		// delete existing blog option
 		delete_option( 'bp_xp_wp_sync_options' );
 
+		// get existing upgrade data
+		$store = get_option( 'bp_xp_wp_sync_options_store', array() );
+
+		// migrate it if it exists
+		if ( count( $store ) > 0 ) {
+
+			// save as network option
+			add_site_option( 'bp_xp_wp_sync_options_store', $store );
+
+		}
+
+		// delete existing upgrade data
+		delete_option( 'bp_xp_wp_sync_options_store' );
+
 		// get installed flag
 		$flag = get_option( 'bp_xp_wp_sync_installed', 'false' );
 
