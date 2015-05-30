@@ -3,8 +3,8 @@ Contributors: needle
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8MZNB9D3PF48S
 Tags: buddypress, xprofile, profile, sync
 Requires at least: 3.5
-Tested up to: 4.1
-Stable tag: 0.5.3
+Tested up to: 4.2
+Stable tag: 0.6.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -31,6 +31,14 @@ The plugin replaces the default BuddyPress XProfile Name field with two fields c
 
 
 == Changelog ==
+
+= 0.6 =
+
+* Damage limitation
+
+= 0.6 =
+
+* Broken release :(
 
 = 0.5.3 =
 
