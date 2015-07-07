@@ -619,19 +619,30 @@ class BpXProfileWordPressUserSync {
 
 			}
 
-			// update first_name field
-			xprofile_set_field_data(
-				$this->options[ 'first_name_field_id' ],
-				$user_id,
-				$first_name
-			);
+			/**
+			 * In multisite when not on the main blog, our options are not loaded
+			 * because I mistakenly failed to use a site_option instead of a blog
+			 * option. At the moment, there's little I can do except to skip this
+			 */
 
-			// update last_name field
-			xprofile_set_field_data(
-				$this->options[ 'last_name_field_id' ],
-				$user_id,
-				$last_name
-			);
+			// test for main site
+			if ( is_multisite() AND is_main_site() ) {
+
+				// update first_name field
+				xprofile_set_field_data(
+					$this->options[ 'first_name_field_id' ],
+					$user_id,
+					$first_name
+				);
+
+				// update last_name field
+				xprofile_set_field_data(
+					$this->options[ 'last_name_field_id' ],
+					$user_id,
+					$last_name
+				);
+
+			}
 
 			/**
 			 * When xProfiles are updated, BuddyPress sets user nickname and display name
