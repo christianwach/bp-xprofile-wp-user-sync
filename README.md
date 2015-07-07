@@ -29,7 +29,11 @@ If you have cloned the code from GitHub, it is assumed that you know what you're
 
 ## Changelogs ##
 
-= 0.6.2 =
+### 0.6.3 ###
+
+Fix profile sync from multisite subsites
+
+### 0.6.2 ###
 
 * More detailed plugin update warnings
 * Prevent "can_delete" being incorrectly updated

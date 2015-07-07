@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: buddypress, xprofile, profile, sync
 Requires at least: 3.5
 Tested up to: 4.2
-Stable tag: 0.6.2
+Stable tag: 0.6.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -41,6 +41,10 @@ This plugin is in active development. For feature requests and bug reports (or i
 
 
 == Changelog ==
+
+= 0.6.3 =
+
+Fix profile sync from multisite subsites
 
 = 0.6.2 =
 
@@ -112,6 +116,6 @@ Initial commit
 
 == Upgrade Notice ==
 
-= 0.6.2 =
+= 0.6.3 =
 
 When upgrading this plugin, it's best to simply replace the plugin directory directly. This is preferable to using the WordPress updater because it avoids the deactivate-activate process.
