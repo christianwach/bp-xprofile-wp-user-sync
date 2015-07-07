@@ -622,22 +622,39 @@ class BpXProfileWordPressUserSync {
 			/**
 			 * In multisite when not on the main blog, our options are not loaded
 			 * because I mistakenly failed to use a site_option instead of a blog
-			 * option. At the moment, there's little I can do except to skip this
+			 * option. At the moment, there's little I can do except to switch to
+			 * the BP root blog and grab the values from there. I assume this
+			 * won't be a common occurrence and therefore that this won't cause
+			 * too much of an overhead.
 			 */
 
-			// test for main site
-			if ( is_multisite() AND is_main_site() ) {
+			// test for site other than main site
+			if ( is_multisite() AND ! is_main_site() ) {
+
+				// switch to main blog
+				switch_to_blog( bp_get_root_blog_id() );
+
+				// get options array, if it exists
+				$this->options = get_option( 'bp_xp_wp_sync_options', array() );
+
+				// switch back
+				restore_current_blog();
+
+			}
+
+			// test for one of our options
+			if ( isset( $this->options['first_name_field_id'] ) ) {
 
 				// update first_name field
 				xprofile_set_field_data(
-					$this->options[ 'first_name_field_id' ],
+					$this->options['first_name_field_id'],
 					$user_id,
 					$first_name
 				);
 
 				// update last_name field
 				xprofile_set_field_data(
-					$this->options[ 'last_name_field_id' ],
+					$this->options['last_name_field_id'],
 					$user_id,
 					$last_name
 				);
