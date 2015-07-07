@@ -1,11 +1,11 @@
-BP XProfile WordPress User Sync
+BP xProfile WordPress User Sync
 ===============================
 
-The *BP XProfile WordPress User Sync* plugin is useful when you have a BuddyPress network in which you want users to enter values for *First Name* and *Last Name* rather than rely on the more freeform default *Name* field that BuddyPress provides.
+The *BP xProfile WordPress User Sync* plugin is useful when you have a BuddyPress network in which you want users to enter values for *First Name* and *Last Name* rather than rely on the more freeform default *Name* field that BuddyPress provides.
 
-The plugin replaces the default BuddyPress XProfile *Name* field with two fields called (surprisingly) *First Name* and *Last Name*. These field values are kept in sync with the corresponding WordPress user profile fields as well as the BuddyPress XProfile *Name* field itself.
+The plugin replaces the default BuddyPress xProfile *Name* field with two fields called (surprisingly) *First Name* and *Last Name*. These field values are kept in sync with the corresponding WordPress user profile fields as well as the BuddyPress xProfile *Name* field itself.
 
-It has further compatibility with WP FB AutoConnect Premium logins, so that - like BuddyPress - a WordPress user's nickname and display name are also updated when their XProfile is updated.
+It has further compatibility with WP FB AutoConnect Premium logins, so that - like BuddyPress - a WordPress user's nickname and display name are also updated when their xProfile is updated.
 
 If you're a developer, I'd welcome your contributions. If not, it's probably better to install this plugin from the [WordPress Plugin Directory](http://wordpress.org/plugins/bp-xprofile-wp-user-sync/).
 
@@ -17,7 +17,7 @@ There are two ways to install from GitHub:
 
 #### ZIP Download ####
 
-If you have downloaded *BP XProfile WordPress User Sync* as a ZIP file from the GitHub repository, do the following to install and activate the plugin and theme:
+If you have downloaded *BP xProfile WordPress User Sync* as a ZIP file from the GitHub repository, do the following to install and activate the plugin and theme:
 
 1. Unzip the .zip file and, if needed, rename the enclosing folder so that the plugin's files are located directly inside `/wp-content/plugins/bp-xprofile-wp-user-sync`
 2. Activate the plugin on the main BuddyPress site
