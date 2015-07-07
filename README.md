@@ -29,6 +29,19 @@ If you have cloned the code from GitHub, it is assumed that you know what you're
 
 ## Changelogs ##
 
+= 0.6.2 =
+
+* More detailed plugin update warnings
+* Prevent "can_delete" being incorrectly updated
+
+### 0.6.1 ###
+
+Damage limitation
+
+### 0.6 ###
+
+Broken release :(
+
 ### 0.5.3 ###
 
 Respect existing excluded fields during xProfile query process
