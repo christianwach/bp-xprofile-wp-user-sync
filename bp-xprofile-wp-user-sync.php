@@ -132,14 +132,14 @@ class BpXProfileWordPressUserSync {
 			} else {
 
 				// first name field
-				$existing_first_name_field_id = $existing_fields[ 'first_name_field_id' ];
-				$existing_first_name_field_name = $existing_fields[ 'first_name_field_name' ];
-				$existing_first_name_field_desc = $existing_fields[ 'first_name_field_desc' ];
+				$existing_first_name_field_id = $existing_fields['first_name_field_id'];
+				$existing_first_name_field_name = $existing_fields['first_name_field_name'];
+				$existing_first_name_field_desc = $existing_fields['first_name_field_desc'];
 
 				// first name field
-				$existing_last_name_field_id = $existing_fields[ 'last_name_field_id' ];
-				$existing_last_name_field_name = $existing_fields[ 'last_name_field_name' ];
-				$existing_last_name_field_desc = $existing_fields[ 'last_name_field_desc' ];
+				$existing_last_name_field_id = $existing_fields['last_name_field_id'];
+				$existing_last_name_field_name = $existing_fields['last_name_field_name'];
+				$existing_last_name_field_desc = $existing_fields['last_name_field_desc'];
 
 			}
 
@@ -196,8 +196,8 @@ class BpXProfileWordPressUserSync {
 			delete_option( 'bp_xp_wp_sync_options_store' );
 
 			// add to options
-			$this->options[ 'first_name_field_id' ] = $existing_first_name_field_id;
-			$this->options[ 'last_name_field_id' ] = $existing_last_name_field_id;
+			$this->options['first_name_field_id'] = $existing_first_name_field_id;
+			$this->options['last_name_field_id'] = $existing_last_name_field_id;
 
 			// update options array
 			update_option( 'bp_xp_wp_sync_options', $this->options );
@@ -205,8 +205,8 @@ class BpXProfileWordPressUserSync {
 		} else {
 
 			// add to options
-			$this->options[ 'first_name_field_id' ] = $first_name_field_id;
-			$this->options[ 'last_name_field_id' ] = $last_name_field_id;
+			$this->options['first_name_field_id'] = $first_name_field_id;
+			$this->options['last_name_field_id'] = $last_name_field_id;
 
 			// save options array
 			add_option( 'bp_xp_wp_sync_options', $this->options );
@@ -251,7 +251,7 @@ class BpXProfileWordPressUserSync {
 		$options = array();
 
 		// get first_name xProfile field
-		$field = new BP_XProfile_Field( $this->options[ 'first_name_field_id' ] );
+		$field = new BP_XProfile_Field( $this->options['first_name_field_id'] );
 
 		// store data about first name field
 		$options['first_name_field_id'] = $field->id;
@@ -263,7 +263,7 @@ class BpXProfileWordPressUserSync {
 		$field->delete();
 
 		// get last_name xProfile field
-		$field = new BP_XProfile_Field( $this->options[ 'last_name_field_id' ] );
+		$field = new BP_XProfile_Field( $this->options['last_name_field_id'] );
 
 		// store data about first name field
 		$options['last_name_field_id'] = $field->id;
@@ -723,13 +723,13 @@ class BpXProfileWordPressUserSync {
 
 		// get our user's first name
 		$first_name = xprofile_get_field_data(
-			$this->options[ 'first_name_field_id' ],
+			$this->options['first_name_field_id'],
 			$user_id
 		);
 
 		// get our user's last name
 		$last_name = xprofile_get_field_data(
-			$this->options[ 'last_name_field_id' ],
+			$this->options['last_name_field_id'],
 			$user_id
 		);
 
