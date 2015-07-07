@@ -18,16 +18,16 @@ Domain Path: /languages
 define( 'BP_XPROFILE_WP_USER_SYNC_VERSION', '0.6.2' );
 
 // store reference to this file
-if ( !defined( 'BP_XPROFILE_WP_USER_SYNC_FILE' ) ) {
+if ( ! defined( 'BP_XPROFILE_WP_USER_SYNC_FILE' ) ) {
 	define( 'BP_XPROFILE_WP_USER_SYNC_FILE', __FILE__ );
 }
 
 // store URL to this plugin's directory
-if ( !defined( 'BP_XPROFILE_WP_USER_SYNC_URL' ) ) {
+if ( ! defined( 'BP_XPROFILE_WP_USER_SYNC_URL' ) ) {
 	define( 'BP_XPROFILE_WP_USER_SYNC_URL', plugin_dir_url( BP_XPROFILE_WP_USER_SYNC_FILE ) );
 }
 // store PATH to this plugin's directory
-if ( !defined( 'BP_XPROFILE_WP_USER_SYNC_PATH' ) ) {
+if ( ! defined( 'BP_XPROFILE_WP_USER_SYNC_PATH' ) ) {
 	define( 'BP_XPROFILE_WP_USER_SYNC_PATH', plugin_dir_path( BP_XPROFILE_WP_USER_SYNC_FILE ) );
 }
 
@@ -397,7 +397,7 @@ class BpXProfileWordPressUserSync {
 		$args = array();
 
 		// if on profile view screen
-		if ( bp_is_user_profile() AND !bp_is_user_profile_edit() ) {
+		if ( bp_is_user_profile() AND ! bp_is_user_profile_edit() ) {
 
 			// get fields to exclude on profile view screen
 			$args['exclude_fields'] = $this->_get_excluded_fields();
@@ -590,7 +590,7 @@ class BpXProfileWordPressUserSync {
 	public function intercept_wp_user_update( $user_id ) {
 
 		// only map data when the site admin is adding users, not on registration.
-		if ( !is_admin() ) { return false; }
+		if ( ! is_admin() ) { return false; }
 
 		// populate the user's first and last names
 		if ( bp_is_active( 'xprofile' ) ) {
@@ -639,7 +639,7 @@ class BpXProfileWordPressUserSync {
 			 */
 
 			// construct full name
-			$full_name = $first_name.' '.$last_name;
+			$full_name = $first_name . ' ' . $last_name;
 
 			// set user nickname
 			bp_update_user_meta( $user_id, 'nickname', $full_name );
@@ -684,7 +684,7 @@ class BpXProfileWordPressUserSync {
 		// we're hooked in before BP core
 		$bp = buddypress();
 
-		if ( !empty( $bp->site_options['bp-disable-profile-sync'] ) && (int) $bp->site_options['bp-disable-profile-sync'] )
+		if ( ! empty( $bp->site_options['bp-disable-profile-sync'] ) && (int) $bp->site_options['bp-disable-profile-sync'] )
 			return true;
 
 		if ( empty( $user_id ) )
@@ -706,7 +706,7 @@ class BpXProfileWordPressUserSync {
 		);
 
 		// concatenate as per BP core
-		$name = $first_name.' '.$last_name;
+		$name = $first_name . ' ' . $last_name;
 		//print_r( array( 'name' => $name ) ); die();
 
 		/**
@@ -803,7 +803,7 @@ class BpXProfileWordPressUserSync {
 		$field_id = xprofile_insert_field( $data );
 
 		// die if unsuccessful
-		if ( !is_numeric( $field_id ) ) {
+		if ( ! is_numeric( $field_id ) ) {
 
 			// construct message
 			$msg = __(
