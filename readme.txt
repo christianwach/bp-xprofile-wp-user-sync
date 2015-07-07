@@ -8,7 +8,7 @@ Stable tag: 0.6.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-BP xProfile WordPress User Sync replaces the default BuddyPress xProfile 'Name' field with 'First Name' and 'Last Name' fields and keeps these in sync with the corresponding WordPress user profile fields.
+Replaces the default BuddyPress xProfile Name field with First Name and Last Name fields and keeps these in sync with WordPress user profile fields.
 
 
 
@@ -49,23 +49,23 @@ This plugin is in active development. For feature requests and bug reports (or i
 
 = 0.6.1 =
 
-* Damage limitation
+Damage limitation
 
 = 0.6 =
 
-* Broken release :(
+Broken release :(
 
 = 0.5.3 =
 
-* Respect existing excluded fields during xProfile query process
+Respect existing excluded fields during xProfile query process
 
 = 0.5.2 =
 
-* Pre-filter profile query when BP is sufficiently recent
+Pre-filter profile query when BP is sufficiently recent
 
 = 0.5.1 =
 
-* Fix translation (props flegmatiq)
+Fix translation (props flegmatiq)
 
 = 0.5 =
 
@@ -107,3 +107,11 @@ Initial release
 = 0.1 =
 
 Initial commit
+
+
+
+== Upgrade Notice ==
+
+= 0.6.2 =
+
+When upgrading this plugin, it's best to simply replace the plugin directory directly. This is preferable to using the WordPress updater because it avoids the deactivate-activate process.
