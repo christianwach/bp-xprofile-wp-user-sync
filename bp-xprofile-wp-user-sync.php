@@ -828,7 +828,7 @@ class BpXProfileWordPressUserSync {
 		$field = new BP_XProfile_Field( $field_id );
 
 		// let's see if our new field is correctly set
-		if ( $field->can_delete !== 0 ) {
+		if ( $field->can_delete != 0 ) {
 
 			// we'll need these to manually update, because the API can't do it
 			global $wpdb, $bp;
