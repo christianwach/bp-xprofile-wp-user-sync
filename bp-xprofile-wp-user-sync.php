@@ -114,6 +114,9 @@ class BpXProfileWordPressUserSync {
 	 */
 	public function activate() {
 
+		// bail if BuddyPress xProfile not active
+		if ( ! class_exists( 'BP_XProfile_Field' ) ) return;
+
 		// are we re-activating?
 		$reactivating = ( get_option( 'bp_xp_wp_sync_installed', 'false' ) === 'true' ) ? true : false;
 
@@ -249,6 +252,9 @@ class BpXProfileWordPressUserSync {
 
 		// init storage array
 		$options = array();
+
+		// bail if BuddyPress xProfile not active
+		if ( ! class_exists( 'BP_XProfile_Field' ) ) return;
 
 		// get first_name xProfile field
 		$field = new BP_XProfile_Field( $this->options['first_name_field_id'] );
