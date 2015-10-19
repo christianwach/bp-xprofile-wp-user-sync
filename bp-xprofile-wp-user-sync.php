@@ -326,6 +326,9 @@ class BpXProfileWordPressUserSync {
 		// compatibility with "WP FB AutoConnect Premium"
 		add_filter( 'wpfb_xprofile_fields_received', array( $this, 'intercept_wp_fb_profile_sync' ), 10, 2 );
 
+		// compatibility with "WooCommerce"
+		add_action( 'woocommerce_save_account_details', array( $this, 'intercept_woo_user_update' ), 30, 1 );
+
 	}
 
 
@@ -582,13 +585,7 @@ class BpXProfileWordPressUserSync {
 
 
 	/**
-	 * Intercept WP user registration and update process and populate our fields.
-	 *
-	 * However, BuddyPress updates the "Name" field before wp_insert_user or wp_update_user get
-	 * called - it hooks into 'user_profile_update_errors' instead. So, there are two options:
-	 * either hook into the same action or call the same function below. Until I raise this as
-	 * an issue (ie, why do database operations via an action designed to collate errors) I'll
-	 * temporarily call the same function.
+	 * Intercept WP user registration and profile updates in WP Admin screens
 	 *
 	 * @param integer $user_id
 	 * @return void
@@ -597,6 +594,133 @@ class BpXProfileWordPressUserSync {
 
 		// only map data when the site admin is adding users, not on registration.
 		if ( ! is_admin() ) { return false; }
+
+		// pass to method
+		$this->_user_update( $user_id );
+
+	}
+
+
+
+	/**
+	 * Intercept WooCommerce profile updates
+	 *
+	 * @param integer $user_id
+	 * @return void
+	 */
+	public function intercept_woo_user_update( $user_id ) {
+
+		// pass to method
+		$this->_user_update( $user_id );
+
+	}
+
+
+
+	/**
+	 * Intercept BP core's attempt to sync to WP user profile
+	 *
+	 * @param integer $user_id
+	 * @param array $posted_field_ids
+	 * @param boolean $errors
+	 * @return void
+	 */
+	public function intercept_wp_profile_sync( $user_id = 0, $posted_field_ids, $errors ) {
+
+		// we're hooked in before BP core
+		$bp = buddypress();
+
+		if ( ! empty( $bp->site_options['bp-disable-profile-sync'] ) && (int) $bp->site_options['bp-disable-profile-sync'] )
+			return true;
+
+		if ( empty( $user_id ) )
+			$user_id = bp_loggedin_user_id();
+
+		if ( empty( $user_id ) )
+			return false;
+
+		// get our user's first name
+		$first_name = xprofile_get_field_data(
+			$this->options['first_name_field_id'],
+			$user_id
+		);
+
+		// get our user's last name
+		$last_name = xprofile_get_field_data(
+			$this->options['last_name_field_id'],
+			$user_id
+		);
+
+		// concatenate as per BP core
+		$name = $first_name . ' ' . $last_name;
+		//print_r( array( 'name' => $name ) ); die();
+
+		/**
+		 * Set default name field for this user - setting it now ensures that
+		 * when xprofile_sync_wp_profile() is called, BuddyPress has the correct
+		 * data to perform its updates with
+		 */
+		xprofile_set_field_data( bp_xprofile_fullname_field_name(), $user_id, $name );
+
+	}
+
+
+
+	/**
+	 * Compatibility with "WP FB AutoConnect Premium"
+	 *
+	 * @param array $facebook_user
+	 * @return array $facebook_user
+	 */
+	public function intercept_wp_fb_profile_sync( $facebook_user, $wp_user_id ) {
+
+		/**
+		 * When xProfiles are updated, BuddyPress sets user nickname and display name
+		 * so WP FB AutoConnect Premium should do too. To do so, alter line 1315 or so:
+		 *
+		 * //A filter so 3rd party plugins can process any extra fields they might need
+		 * $fbuser = apply_filters('wpfb_xprofile_fields_received', $fbuser, $args['WP_ID']);
+		 */
+
+		// set user nickname
+		bp_update_user_meta( $wp_user_id, 'nickname', $facebook_user['name'] );
+
+		// access db
+		global $wpdb;
+
+		// set user display name - see xprofile_sync_wp_profile()
+		$wpdb->query(
+			$wpdb->prepare(
+				"UPDATE {$wpdb->users} SET display_name = %s WHERE ID = %d",
+				$facebook_user['name'],
+				$wp_user_id
+			)
+		);
+
+		// pass it on
+		return $facebook_user;
+
+	}
+
+
+
+	//##########################################################################
+
+
+
+	/**
+	 * Do WP user update process and populate our fields.
+	 *
+	 * Note that BuddyPress updates the "Name" field before wp_insert_user or wp_update_user get
+	 * called - it hooks into 'user_profile_update_errors' instead. So, there are two options:
+	 * either hook into the same action or call the same function below. Until I raise this as
+	 * an issue (ie, why do database operations via an action designed to collate errors) I'll
+	 * temporarily call the same function.
+	 *
+	 * @param integer $user_id
+	 * @return void
+	 */
+	private function _user_update( $user_id ) {
 
 		// populate the user's first and last names
 		if ( bp_is_active( 'xprofile' ) ) {
@@ -702,97 +826,6 @@ class BpXProfileWordPressUserSync {
 		}
 
 	}
-
-
-
-	/**
-	 * Intercept BP core's attempt to sync to WP user profile
-	 *
-	 * @param integer $user_id
-	 * @param array $posted_field_ids
-	 * @param boolean $errors
-	 * @return void
-	 */
-	public function intercept_wp_profile_sync( $user_id = 0, $posted_field_ids, $errors ) {
-
-		// we're hooked in before BP core
-		$bp = buddypress();
-
-		if ( ! empty( $bp->site_options['bp-disable-profile-sync'] ) && (int) $bp->site_options['bp-disable-profile-sync'] )
-			return true;
-
-		if ( empty( $user_id ) )
-			$user_id = bp_loggedin_user_id();
-
-		if ( empty( $user_id ) )
-			return false;
-
-		// get our user's first name
-		$first_name = xprofile_get_field_data(
-			$this->options['first_name_field_id'],
-			$user_id
-		);
-
-		// get our user's last name
-		$last_name = xprofile_get_field_data(
-			$this->options['last_name_field_id'],
-			$user_id
-		);
-
-		// concatenate as per BP core
-		$name = $first_name . ' ' . $last_name;
-		//print_r( array( 'name' => $name ) ); die();
-
-		/**
-		 * Set default name field for this user - setting it now ensures that
-		 * when xprofile_sync_wp_profile() is called, BuddyPress has the correct
-		 * data to perform its updates with
-		 */
-		xprofile_set_field_data( bp_xprofile_fullname_field_name(), $user_id, $name );
-
-	}
-
-
-
-	/**
-	 * Compatibility with "WP FB AutoConnect Premium"
-	 *
-	 * @param array $facebook_user
-	 * @return array $facebook_user
-	 */
-	public function intercept_wp_fb_profile_sync( $facebook_user, $wp_user_id ) {
-
-		/**
-		 * When xProfiles are updated, BuddyPress sets user nickname and display name
-		 * so WP FB AutoConnect Premium should do too. To do so, alter line 1315 or so:
-		 *
-		 * //A filter so 3rd party plugins can process any extra fields they might need
-		 * $fbuser = apply_filters('wpfb_xprofile_fields_received', $fbuser, $args['WP_ID']);
-		 */
-
-		// set user nickname
-		bp_update_user_meta( $wp_user_id, 'nickname', $facebook_user['name'] );
-
-		// access db
-		global $wpdb;
-
-		// set user display name - see xprofile_sync_wp_profile()
-		$wpdb->query(
-			$wpdb->prepare(
-				"UPDATE {$wpdb->users} SET display_name = %s WHERE ID = %d",
-				$facebook_user['name'],
-				$wp_user_id
-			)
-		);
-
-		// pass it on
-		return $facebook_user;
-
-	}
-
-
-
-	//##########################################################################
 
 
 
