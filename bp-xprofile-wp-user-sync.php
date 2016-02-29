@@ -66,9 +66,6 @@ class BpXProfileWordPressUserSync {
 		// use translation
 		add_action( 'plugins_loaded', array( $this, 'translation' ) );
 
-		// --<
-		return $this;
-
 	}
 
 
