@@ -42,6 +42,10 @@ This plugin is in active development. For feature requests and bug reports (or i
 
 == Changelog ==
 
+= 0.6.4 =
+
+Fix profile sync when first name and/or last name contain one or more spaces
+
 = 0.6.3 =
 
 Fix profile sync from multisite subsites
@@ -115,6 +119,10 @@ Initial commit
 
 
 == Upgrade Notice ==
+
+= 0.6.4 =
+
+When upgrading this plugin, it is **strongly recommended** that you replace the plugin directory directly. This is preferable because it avoids the deactivate-activate process that happens with the WordPress updater.
 
 = 0.6.3 =
 
