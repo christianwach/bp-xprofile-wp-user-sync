@@ -315,7 +315,7 @@ class BpXProfileWordPressUserSync {
 		add_action( 'user_register', array( $this, 'intercept_wp_user_update' ), 30, 1 );
 		add_action( 'profile_update', array( $this, 'intercept_wp_user_update' ), 30, 1 );
 
-		// update the default name field before xprofile_sync_wp_profile is called
+		// remove 'user_register' and 'profile_update' hooks and add post-update hooks
 		add_action( 'xprofile_updated_profile', array( $this, 'intercept_wp_profile_sync' ), 9, 3 );
 		add_action( 'bp_core_signup_user', array( $this, 'intercept_wp_profile_sync' ), 9, 3 );
 		add_action( 'bp_core_activated_user', array( $this, 'intercept_wp_profile_sync' ), 9, 3 );
@@ -624,17 +624,54 @@ class BpXProfileWordPressUserSync {
 	 */
 	public function intercept_wp_profile_sync( $user_id = 0, $posted_field_ids, $errors ) {
 
-		// we're hooked in before BP core
-		$bp = buddypress();
-
-		if ( ! empty( $bp->site_options['bp-disable-profile-sync'] ) && (int) $bp->site_options['bp-disable-profile-sync'] )
+		// bail if profile syncing is disabled
+		if ( bp_disable_profile_sync() ) {
 			return true;
+		}
 
-		if ( empty( $user_id ) )
+		if ( empty( $user_id ) ) {
 			$user_id = bp_loggedin_user_id();
+		}
 
-		if ( empty( $user_id ) )
+		if ( empty( $user_id ) ) {
 			return false;
+		}
+
+		// remove our hooks
+		remove_action( 'user_register', array( $this, 'intercept_wp_user_update' ), 30 );
+		remove_action( 'profile_update', array( $this, 'intercept_wp_user_update' ), 30 );
+
+		// after xprofile_sync_wp_profile runs, re-sync with correct values
+		add_action( 'xprofile_updated_profile', array( $this, 'intercept_wp_profile_sync_patch' ), 11, 3 );
+		add_action( 'bp_core_signup_user', array( $this, 'intercept_wp_profile_sync_patch' ), 11, 3 );
+		add_action( 'bp_core_activated_user', array( $this, 'intercept_wp_profile_sync_patch' ), 11, 3 );
+
+	}
+
+
+
+	/**
+	 * Overwrite BP core's attempt to sync to WP user profile
+	 *
+	 * @param integer $user_id
+	 * @param array $posted_field_ids
+	 * @param boolean $errors
+	 * @return void
+	 */
+	public function intercept_wp_profile_sync_patch( $user_id = 0, $posted_field_ids, $errors ) {
+
+		// bail if profile syncing is disabled
+		if ( bp_disable_profile_sync() ) {
+			return true;
+		}
+
+		if ( empty( $user_id ) ) {
+			$user_id = bp_loggedin_user_id();
+		}
+
+		if ( empty( $user_id ) ) {
+			return false;
+		}
 
 		// get our user's first name
 		$first_name = xprofile_get_field_data(
@@ -650,14 +687,27 @@ class BpXProfileWordPressUserSync {
 
 		// concatenate as per BP core
 		$name = $first_name . ' ' . $last_name;
-		//print_r( array( 'name' => $name ) ); die();
 
 		/**
-		 * Set default name field for this user - setting it now ensures that
-		 * when xprofile_sync_wp_profile() is called, BuddyPress has the correct
-		 * data to perform its updates with
+		 * Overwrite default name field for this user.
+		 *
+		 * We have to do this because the BuddyPress sync routine does not always
+		 * split names correctly, particularly when either the first name or the
+		 * last name consists of multipe words, e.g. "Michael John" "Smith".
 		 */
 		xprofile_set_field_data( bp_xprofile_fullname_field_name(), $user_id, $name );
+
+		// remove our hooks
+		remove_action( 'user_register', array( $this, 'intercept_wp_user_update' ), 30 );
+		remove_action( 'profile_update', array( $this, 'intercept_wp_user_update' ), 30 );
+
+		// now replicate BuddyPress sync procedure
+		bp_update_user_meta( $user_id, 'nickname',   $name  );
+		bp_update_user_meta( $user_id, 'first_name', $first_name );
+		bp_update_user_meta( $user_id, 'last_name',  $last_name  );
+
+		wp_update_user( array( 'ID' => $user_id, 'display_name' => $name ) );
+		wp_cache_delete( 'bp_core_userdata_' . $user_id, 'bp' );
 
 	}
 
@@ -799,17 +849,12 @@ class BpXProfileWordPressUserSync {
 			// set user nickname
 			bp_update_user_meta( $user_id, 'nickname', $full_name );
 
-			// access db
-			global $wpdb;
+			// remove our hooks
+			remove_action( 'user_register', array( $this, 'intercept_wp_user_update' ), 30 );
+			remove_action( 'profile_update', array( $this, 'intercept_wp_user_update' ), 30 );
 
 			// set user display name - see xprofile_sync_wp_profile()
-			$wpdb->query(
-				$wpdb->prepare(
-					"UPDATE {$wpdb->users} SET display_name = %s WHERE ID = %d",
-					$full_name,
-					$user_id
-				)
-			);
+			wp_update_user( array( 'ID' => $user_id, 'display_name' => $full_name ) );
 
 			// see notes above regarding when BuddyPress updates the "Name" field
 
