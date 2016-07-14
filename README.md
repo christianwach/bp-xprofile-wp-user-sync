@@ -29,6 +29,10 @@ If you have cloned the code from GitHub, it is assumed that you know what you're
 
 ## Changelogs ##
 
+### 0.6.4 ###
+
+Fix profile sync when first name and/or last name contain one or more spaces
+
 ### 0.6.3 ###
 
 Fix profile sync from multisite subsites
