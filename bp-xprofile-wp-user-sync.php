@@ -78,7 +78,7 @@ class BpXProfileWordPressUserSync {
 	 *
 	 * @since 0.1
 	 */
-	function translation() {
+	public function translation() {
 
 		// only use, if we have it...
 		if ( function_exists( 'load_plugin_textdomain' ) ) {
