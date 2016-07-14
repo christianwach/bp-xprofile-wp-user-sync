@@ -33,27 +33,30 @@ if ( ! defined( 'BP_XPROFILE_WP_USER_SYNC_PATH' ) ) {
 
 
 
-/*
---------------------------------------------------------------------------------
-BpXProfileWordPressUserSync Class
---------------------------------------------------------------------------------
-*/
-
+/**
+ * BP XProfile WordPress User Sync Plugin Class.
+ *
+ * A class that encapsulates plugin functionality.
+ *
+ * @since 0.1
+ */
 class BpXProfileWordPressUserSync {
 
 	/**
-	 * Properties
+	 * Plugin Options.
+	 *
+	 * @since 0.1
+	 * @access public
+	 * @var array $options The plugin options array
 	 */
-
-	// plugin options
 	public $options = array();
 
 
 
 	/**
-	 * Initialises this object
+	 * Constructor.
 	 *
-	 * @return object
+	 * @since 0.1
 	 */
 	function __construct() {
 
@@ -71,9 +74,9 @@ class BpXProfileWordPressUserSync {
 
 
 	/**
-	 * Loads translation, if present
+	 * Loads translation, if present.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	function translation() {
 
@@ -105,9 +108,9 @@ class BpXProfileWordPressUserSync {
 
 
 	/**
-	 * Insert xProfile fields for "First Name" and "Last Name"
+	 * Insert xProfile fields for "First Name" and "Last Name".
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function activate() {
 
@@ -227,9 +230,9 @@ class BpXProfileWordPressUserSync {
 
 
 	/**
-	 * Actions to perform on plugin deactivation (NOT deletion)
+	 * Actions to perform on plugin deactivation. (NOT deletion)
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function deactivate() {
 
@@ -288,9 +291,9 @@ class BpXProfileWordPressUserSync {
 
 
 	/**
-	 * Actions to perform on plugin init
+	 * Register hooks when BuddyPress has initialised.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
 	public function register_hooks() {
 
@@ -331,7 +334,9 @@ class BpXProfileWordPressUserSync {
 
 
 	/**
-	 * Intercept xProfile query process and manage display of fields
+	 * Intercept xProfile query process and manage display of fields.
+	 *
+	 * @since 0.1
 	 *
 	 * @param array $args The existing arguments used to query for fields
 	 * @return array $args The modified arguments used to query for fields
@@ -391,7 +396,9 @@ class BpXProfileWordPressUserSync {
 
 
 	/**
-	 * Intercept xProfile query process and manage display of fields
+	 * Intercept xProfile query process and manage display of fields.
+	 *
+	 * @since 0.1
 	 *
 	 * @param boolean $has_groups
 	 * @param object $profile_template
@@ -557,11 +564,12 @@ class BpXProfileWordPressUserSync {
 
 
 	/**
-	 * Intercept xprofile query process and manage display of fields
+	 * Intercept xprofile query process and manage display of fields.
+	 *
+	 * @since 0.1
 	 *
 	 * @param array $groups The xProfile groups
 	 * @param array $args The arguments
-	 * @return void
 	 */
 	public function intercept_profile_fields_query( $groups, $args ) {
 
@@ -582,10 +590,11 @@ class BpXProfileWordPressUserSync {
 
 
 	/**
-	 * Intercept WP user registration and profile updates in WP Admin screens
+	 * Intercept WP user registration and profile updates in WP Admin screens.
+	 *
+	 * @since 0.1
 	 *
 	 * @param integer $user_id
-	 * @return void
 	 */
 	public function intercept_wp_user_update( $user_id ) {
 
@@ -600,10 +609,11 @@ class BpXProfileWordPressUserSync {
 
 
 	/**
-	 * Intercept WooCommerce profile updates
+	 * Intercept WooCommerce profile updates.
+	 *
+	 * @since 0.6.3
 	 *
 	 * @param integer $user_id
-	 * @return void
 	 */
 	public function intercept_woo_user_update( $user_id ) {
 
@@ -615,12 +625,13 @@ class BpXProfileWordPressUserSync {
 
 
 	/**
-	 * Intercept BP core's attempt to sync to WP user profile
+	 * Intercept BP core's attempt to sync to WP user profile.
+	 *
+	 * @since 0.1
 	 *
 	 * @param integer $user_id
 	 * @param array $posted_field_ids
 	 * @param boolean $errors
-	 * @return void
 	 */
 	public function intercept_wp_profile_sync( $user_id = 0, $posted_field_ids, $errors ) {
 
@@ -651,7 +662,9 @@ class BpXProfileWordPressUserSync {
 
 
 	/**
-	 * Overwrite BP core's attempt to sync to WP user profile
+	 * Overwrite BP core's attempt to sync to WP user profile.
+	 *
+	 * @since 0.6.4
 	 *
 	 * @param integer $user_id
 	 * @param array $posted_field_ids
@@ -714,7 +727,9 @@ class BpXProfileWordPressUserSync {
 
 
 	/**
-	 * Compatibility with "WP FB AutoConnect Premium"
+	 * Compatibility with "WP FB AutoConnect Premium".
+	 *
+	 * @since 0.3
 	 *
 	 * @param array $facebook_user
 	 * @return array $facebook_user
@@ -758,14 +773,16 @@ class BpXProfileWordPressUserSync {
 	/**
 	 * Do WP user update process and populate our fields.
 	 *
-	 * Note that BuddyPress updates the "Name" field before wp_insert_user or wp_update_user get
-	 * called - it hooks into 'user_profile_update_errors' instead. So, there are two options:
-	 * either hook into the same action or call the same function below. Until I raise this as
-	 * an issue (ie, why do database operations via an action designed to collate errors) I'll
+	 * Note that BuddyPress updates the "Name" field before wp_insert_user or
+	 * wp_update_user get called - it hooks into 'user_profile_update_errors'
+	 * instead. So, there are two options: either hook into the same action or
+	 * call the same function below. Until I raise this as an issue (ie, why do
+	 * database operations via an action designed to collate errors) I'll
 	 * temporarily call the same function.
 	 *
+	 * @since 0.6.3
+	 *
 	 * @param integer $user_id
-	 * @return void
 	 */
 	private function _user_update( $user_id ) {
 
@@ -839,8 +856,8 @@ class BpXProfileWordPressUserSync {
 			}
 
 			/**
-			 * When xProfiles are updated, BuddyPress sets user nickname and display name
-			 * so we should too...
+			 * When xProfiles are updated, BuddyPress sets user nickname and
+			 * display name so we should too...
 			 */
 
 			// construct full name
@@ -872,7 +889,9 @@ class BpXProfileWordPressUserSync {
 
 
 	/**
-	 * Create a field with a given name
+	 * Create a field with a given name.
+	 *
+	 * @since 0.1
 	 *
 	 * @param str $field_name The name of the field
 	 * @param str $field_description The field description
@@ -973,13 +992,15 @@ class BpXProfileWordPressUserSync {
 
 
 	/**
-	 * Update a field with a given ID
+	 * Update a field with a given ID.
 	 *
 	 * The idea here is to try and reconnect the "orphaned" field data with the
 	 * field definition by changing the auto-incremented ID of the field back to
 	 * its original value. This should work because the original value should not
 	 * have been reused unless the table has been truncated and the auto-increment
 	 * value reset.
+	 *
+	 * @since 0.5
 	 *
 	 * @param int $old_field_id The previous ID of the field
 	 * @param int $new_field_id The new ID of the field
@@ -1036,7 +1057,9 @@ class BpXProfileWordPressUserSync {
 
 
 	/**
-	 * Get excluded fields on Profile View
+	 * Get excluded fields on Profile View.
+	 *
+	 * @since 0.5.2
 	 *
 	 * @return string $exclude_fields Comma-separated list of field IDs
 	 */
@@ -1072,7 +1095,9 @@ class BpXProfileWordPressUserSync {
 
 
 	/**
-	 * Merge excluded fields on Profile View
+	 * Merge excluded fields on Profile View.
+	 *
+	 * @since 0.5.3
 	 *
 	 * @param string $excluded_fields Comma-delimited list of fields already excluded
 	 * @param string $exclude_fields Comma-delimited list of fields requiring exclusion
