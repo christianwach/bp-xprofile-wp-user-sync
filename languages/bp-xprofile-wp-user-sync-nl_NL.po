@@ -1,0 +1,74 @@
+# Copyright (C) 2016 BP XProfile WordPress User Sync
+# This file is distributed under the same license as the BP XProfile WordPress User Sync package.
+msgid ""
+msgstr ""
+"Project-Id-Version: BP XProfile WordPress User Sync 0.6.4\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/bp-xprofile-wp-"
+"user-sync\n"
+"POT-Creation-Date: 2016-07-31 14:47+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2016-07-31 15:19+0200\n"
+"Language-Team: \n"
+"X-Generator: Poedit 1.8.8\n"
+"Last-Translator: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: nl_NL\n"
+
+#: bp-xprofile-wp-user-sync.php:156
+msgid "First Name"
+msgstr "Voornaam"
+
+#: bp-xprofile-wp-user-sync.php:175
+msgid "Last Name"
+msgstr "Achternaam"
+
+#: bp-xprofile-wp-user-sync.php:937
+msgid "BP XProfile WordPress User Sync plugin: Could not create xProfile field"
+msgstr ""
+"BP XProfile WordPress User Sync plugin: Het xProfile veld kon niet "
+"aangemaakt worden"
+
+#: bp-xprofile-wp-user-sync.php:975
+msgid ""
+"BP XProfile WordPress User Sync plugin: Could not set \"can_delete\" for "
+"xProfile field"
+msgstr ""
+"BP XProfile WordPress User Sync plugin: De optie \"can_delete\" kon niet "
+"ingesteld worden voor het xProfile veld"
+
+#: bp-xprofile-wp-user-sync.php:1021
+msgid ""
+"BP XProfile WordPress User Sync plugin: An xProfile field with that ID "
+"already exists. Cannot reconnect data."
+msgstr ""
+"BP XProfile WordPress User Sync plugin: Een xProfile veld met dat ID bestaat "
+"al.  De data kan niet hersteld worden."
+
+#. Plugin Name of the plugin/theme
+msgid "BP XProfile WordPress User Sync"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "https://github.com/christianwach/bp-xprofile-wp-user-sync"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Map BuddyPress xProfile fields to WordPress User fields. <strong>Note:</"
+"strong> because there is no way to hide xProfile fields, all field "
+"definitions are deleted when it is deactivated. The plugin tries to "
+"reconnect on reactivation, but always backup before deactivating. "
+"<strong>The best way to update this plugin is to replace the folder with the "
+"latest version via FTP or similar. This avoids the deactivate-reactivate "
+"process.</strong>"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Christian Wach"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://haystack.co.uk"
+msgstr ""
