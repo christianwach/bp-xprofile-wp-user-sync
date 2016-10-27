@@ -5,7 +5,7 @@ Plugin Name: BP XProfile WordPress User Sync
 Plugin URI: https://github.com/christianwach/bp-xprofile-wp-user-sync
 Description: Map BuddyPress xProfile fields to WordPress User fields. <strong>Note:</strong> because there is no way to hide xProfile fields, all field definitions are deleted when it is deactivated. The plugin tries to reconnect on reactivation, but always backup before deactivating. <strong>The best way to update this plugin is to replace the folder with the latest version via FTP or similar. This avoids the deactivate-reactivate process.</strong>
 Author: Christian Wach
-Version: 0.6.4
+Version: 0.6.5
 Author URI: http://haystack.co.uk
 Text Domain: bp-xprofile-wp-user-sync
 Domain Path: /languages
@@ -15,7 +15,7 @@ Domain Path: /languages
 
 
 // set our version here
-define( 'BP_XPROFILE_WP_USER_SYNC_VERSION', '0.6.4' );
+define( 'BP_XPROFILE_WP_USER_SYNC_VERSION', '0.6.5' );
 
 // store reference to this file
 if ( ! defined( 'BP_XPROFILE_WP_USER_SYNC_FILE' ) ) {
