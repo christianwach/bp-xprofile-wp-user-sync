@@ -1,0 +1,81 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: BP XProfile WordPress User Sync 0.5.2\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/bp-xprofile-wp-"
+"user-sync\n"
+"POT-Creation-Date: 2016-10-27 11:43+0000\n"
+"PO-Revision-Date: 2016-10-27 11:43+0000\n"
+"Last-Translator: Site Admin <needle@haystack.co.uk>\n"
+"Language-Team: German\n"
+"Language: de-DE\n"
+"Plural-Forms: nplurals=2; plural=n != 1\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: ..\n"
+"X-Poedit-KeywordsList: _:1;gettext:1;dgettext:2;ngettext:1,2;dngettext:2,3;"
+"__:1;_e:1;_c:1;_n:1,2;_n_noop:1,2;_nc:1,2;__ngettext:1,2;__ngettext_noop:1,2;"
+"_x:1,2c;_ex:1,2c;_nx:1,2,4c;_nx_noop:1,2,3c;_n_js:1,2;_nx_js:1,2,3c;"
+"esc_attr__:1;esc_html__:1;esc_attr_e:1;esc_html_e:1;esc_attr_x:1,2c;"
+"esc_html_x:1,2c;comments_number_link:2,3;t:1;st:1;trans:1;transChoice:1,2\n"
+"X-Loco-Target-Locale: de_DE\n"
+"X-Generator: Loco - https://localise.biz/"
+
+#. Plugin Name of the plugin/theme
+msgid "BP XProfile WordPress User Sync"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "https://github.com/christianwach/bp-xprofile-wp-user-sync"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Map BuddyPress xProfile fields to WordPress User fields. <strong>Note:"
+"</strong> because there is no way to hide xProfile fields, all field "
+"definitions are deleted when it is deactivated. The plugin tries to "
+"reconnect on reactivation, but always backup before deactivating. <strong>"
+"The best way to update this plugin is to replace the folder with the latest "
+"version via FTP or similar. This avoids the deactivate-reactivate process."
+"</strong>"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Christian Wach"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://haystack.co.uk"
+msgstr ""
+
+#: bp-xprofile-wp-user-sync.php:156
+msgid "First Name"
+msgstr "Vorname"
+
+#: bp-xprofile-wp-user-sync.php:175
+msgid "Last Name"
+msgstr "Nachname"
+
+#: bp-xprofile-wp-user-sync.php:937
+msgid "BP XProfile WordPress User Sync plugin: Could not create xProfile field"
+msgstr ""
+"BP XProfile WordPress User Sync plugin: xProfile Feld konnte nicht erstellt "
+"werden"
+
+#: bp-xprofile-wp-user-sync.php:975
+msgid ""
+"BP XProfile WordPress User Sync plugin: Could not set \"can_delete\" for "
+"xProfile field"
+msgstr ""
+"BP XProfile WordPress User Sync plugin: \n"
+"\"can_delete\" für xProfile Feld konnte nicht festgelegt"
+
+#: bp-xprofile-wp-user-sync.php:1021
+msgid ""
+"BP XProfile WordPress User Sync plugin: An xProfile field with that ID "
+"already exists. Cannot reconnect data."
+msgstr ""
+"Ein xProfile Feld mit dieser ID ist bereits vorhanden. Können die Daten "
+"nicht wiederherstellen."
