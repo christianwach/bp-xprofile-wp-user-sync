@@ -42,6 +42,10 @@ This plugin is in active development. For feature requests and bug reports (or i
 
 == Changelog ==
 
+= 0.6.5 =
+
+Add translation files
+
 = 0.6.4 =
 
 Fix profile sync when first name and/or last name contain one or more spaces
