@@ -1106,15 +1106,24 @@ class BpXProfileWordPressUserSync {
 	private function _merge_excluded_fields( $excluded_fields, $exclude_fields ) {
 
 		// if params are not arrays already, convert them
-		if ( ! is_array( $excluded_fields ) ) $excluded_fields = explode( ',', $excluded_fields );
-		if ( ! is_array( $exclude_fields ) ) $exclude_fields = explode( ',', $exclude_fields );
-
-		// merge with existing if populated
-		if ( ! empty( $excluded_fields ) ) {
-			$excluded_fields = array_unique( array_merge( $excluded_fields, $exclude_fields ) );
-		} else {
-			$excluded_fields = $exclude_fields;
+		if ( ! is_array( $excluded_fields ) ) {
+			if ( ! empty( $excluded_fields ) ) {
+				$excluded_fields = explode( ',', $excluded_fields );
+			} else {
+				$excluded_fields = array();
+			}
 		}
+
+		if ( ! is_array( $exclude_fields ) ) {
+			if ( ! empty( $exclude_fields ) ) {
+				$exclude_fields = explode( ',', $exclude_fields );
+			} else {
+				$exclude_fields = array();
+			}
+		}
+
+		// merge with existing
+		$excluded_fields = array_unique( array_merge( $excluded_fields, $exclude_fields ) );
 
 		// --<
 		return implode( ',', $excluded_fields );
