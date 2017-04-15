@@ -400,9 +400,9 @@ class BpXProfileWordPressUserSync {
 	 *
 	 * @since 0.1
 	 *
-	 * @param boolean $has_groups
-	 * @param object $profile_template
-	 * @return boolean $has_groups
+	 * @param boolean $has_groups Existing value for whether a query retrieved some groups
+	 * @param object $profile_template The BuddyPress profile template object
+	 * @return boolean $has_groups Modified value for whether a query retrieved some groups
 	 */
 	public function intercept_profile_query( $has_groups, $profile_template ) {
 
@@ -568,8 +568,8 @@ class BpXProfileWordPressUserSync {
 	 *
 	 * @since 0.1
 	 *
-	 * @param array $groups The xProfile groups
-	 * @param array $args The arguments
+	 * @param array $groups The array xProfile groups
+	 * @param array $args The array of arguments
 	 */
 	public function intercept_profile_fields_query( $groups, $args ) {
 
@@ -594,7 +594,7 @@ class BpXProfileWordPressUserSync {
 	 *
 	 * @since 0.1
 	 *
-	 * @param integer $user_id
+	 * @param integer $user_id The numeric ID of the WordPress user
 	 */
 	public function intercept_wp_user_update( $user_id ) {
 
@@ -613,7 +613,7 @@ class BpXProfileWordPressUserSync {
 	 *
 	 * @since 0.6.3
 	 *
-	 * @param integer $user_id
+	 * @param integer $user_id The numeric ID of the WordPress user
 	 */
 	public function intercept_woo_user_update( $user_id ) {
 
@@ -629,9 +629,9 @@ class BpXProfileWordPressUserSync {
 	 *
 	 * @since 0.1
 	 *
-	 * @param integer $user_id
-	 * @param array $posted_field_ids
-	 * @param boolean $errors
+	 * @param integer $user_id The numeric ID of the WordPress user
+	 * @param array $posted_field_ids Array of xProfile field IDs
+	 * @param boolean $errors Any errors
 	 */
 	public function intercept_wp_profile_sync( $user_id = 0, $posted_field_ids, $errors ) {
 
@@ -666,10 +666,9 @@ class BpXProfileWordPressUserSync {
 	 *
 	 * @since 0.6.4
 	 *
-	 * @param integer $user_id
-	 * @param array $posted_field_ids
-	 * @param boolean $errors
-	 * @return void
+	 * @param integer $user_id The numeric ID of the WordPress user
+	 * @param array $posted_field_ids Array of xProfile field IDs
+	 * @param boolean $errors Any errors
 	 */
 	public function intercept_wp_profile_sync_patch( $user_id = 0, $posted_field_ids, $errors ) {
 
@@ -1081,8 +1080,9 @@ class BpXProfileWordPressUserSync {
 		 *     return bp_xprofile_fullname_field_id();
 		 * }
 		 *
-		 * @param string $exclude_fields Comma-delimited pseudo-array of custom fields
+		 * @param string $exclude_fields Existing comma-delimited pseudo-array of custom fields
 		 * @param array $options Array of custom field IDs
+		 * @return string $exclude_fields Modified comma-delimited pseudo-array of custom fields
 		 */
 		return apply_filters(
 			'bp_xprofile_wp_user_sync_exclude_fields',
