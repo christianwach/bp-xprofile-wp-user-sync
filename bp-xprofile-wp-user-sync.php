@@ -236,7 +236,7 @@ class BpXProfileWordPressUserSync {
 	 */
 	public function deactivate() {
 
-		/**
+		/*
 		 * There seems to be no way to hide the xProfile fields once they have
 		 * been created, so we're left with no option but to lose the data when
 		 * we deactivate the plugin :-(
@@ -365,7 +365,7 @@ class BpXProfileWordPressUserSync {
 
 		}
 
-		/**
+		/*
 		 * Apply to registration form whichever page it is displayed on, whilst avoiding
 		 * splitting the Name field into First Name and Last Name fields in the profile
 		 * display loop of the user. Note that we cannot determine if we are in the loop
@@ -461,7 +461,7 @@ class BpXProfileWordPressUserSync {
 			$in_loop = true;
 		}
 
-		/**
+		/*
 		 * Apply to registration form whichever page it is displayed on, whilst avoiding
 		 * splitting the Name field into First Name and Last Name fields in the profile
 		 * display loop of the user. Props https://github.com/sbrajesh
@@ -502,7 +502,7 @@ class BpXProfileWordPressUserSync {
 					// is this the base group?
 					if ( $group->id == 1 ) {
 
-						/**
+						/*
 						 * BP_XProfile_User_Admin queries prior to the loop, so
 						 * do we have the fields populated?
 						 * see BP_XProfile_User_Admin->register_metaboxes()
@@ -564,7 +564,7 @@ class BpXProfileWordPressUserSync {
 
 
 	/**
-	 * Intercept xprofile query process and manage display of fields.
+	 * Intercept xProfile query process and manage display of fields.
 	 *
 	 * @since 0.1
 	 *
@@ -701,7 +701,7 @@ class BpXProfileWordPressUserSync {
 		// concatenate as per BP core
 		$name = $first_name . ' ' . $last_name;
 
-		/**
+		/*
 		 * Overwrite default name field for this user.
 		 *
 		 * We have to do this because the BuddyPress sync routine does not always
@@ -736,7 +736,7 @@ class BpXProfileWordPressUserSync {
 	 */
 	public function intercept_wp_fb_profile_sync( $facebook_user, $wp_user_id ) {
 
-		/**
+		/*
 		 * When xProfiles are updated, BuddyPress sets user nickname and display name
 		 * so WP FB AutoConnect Premium should do too. To do so, alter line 1315 or so:
 		 *
@@ -813,7 +813,7 @@ class BpXProfileWordPressUserSync {
 
 			}
 
-			/**
+			/*
 			 * In multisite when not on the main blog, our options are not loaded
 			 * because I mistakenly failed to use a site_option instead of a blog
 			 * option. At the moment, there's little I can do except to switch to
@@ -855,7 +855,7 @@ class BpXProfileWordPressUserSync {
 
 			}
 
-			/**
+			/*
 			 * When xProfiles are updated, BuddyPress sets user nickname and
 			 * display name so we should too...
 			 */
@@ -1069,7 +1069,7 @@ class BpXProfileWordPressUserSync {
 		$exclude_fields = implode( ',', $this->options );
 
 		/**
-		 * Exclude our xprofile fields, but allow filtering. The relevant params
+		 * Exclude our xProfile fields, but allow filtering. The relevant params
 		 * are passed to the filter so that other plugins can make an informed
 		 * choice of what to return.
 		 *
