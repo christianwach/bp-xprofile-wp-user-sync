@@ -80,21 +80,11 @@ class BpXProfileWordPressUserSync {
 	 */
 	public function translation() {
 
-		// Only use, if we have it.
-		if ( function_exists( 'load_plugin_textdomain' ) ) {
-
-			// Not used, as there are no translations as yet.
+			// Enable translation.
 			load_plugin_textdomain(
-
-				// Unique name.
-				'bp-xprofile-wp-user-sync',
-
-				// Deprecated argument.
-				false,
-
-				// Relative path to directory containing translation files.
-				dirname( plugin_basename( BP_XPROFILE_WP_USER_SYNC_FILE ) ) . '/languages/'
-
+				'bp-xprofile-wp-user-sync', // Unique name.
+				false, // Deprecated argument.
+				dirname( plugin_basename( BP_XPROFILE_WP_USER_SYNC_FILE ) ) . '/languages/' // Relative path to translation files.
 			);
 
 		}
