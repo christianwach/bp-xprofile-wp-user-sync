@@ -1,13 +1,11 @@
 BP xProfile WordPress User Sync
 ===============================
 
+Please note: this is the development repository for *BP xProfile WordPress User Sync*. It can be found in [the WordPress Plugin Directory](https://wordpress.org/plugins/bp-xprofile-wp-user-sync/), which is the best place to get it from if you're not a developer.
+
 The *BP xProfile WordPress User Sync* plugin is useful when you have a BuddyPress network in which you want users to enter values for *First Name* and *Last Name* rather than rely on the more freeform default *Name* field that BuddyPress provides.
 
 The plugin replaces the default BuddyPress xProfile *Name* field with two fields called (surprisingly) *First Name* and *Last Name*. These field values are kept in sync with the corresponding WordPress user profile fields as well as the BuddyPress xProfile *Name* field itself.
-
-It has further compatibility with WP FB AutoConnect Premium logins, so that - like BuddyPress - a WordPress user's nickname and display name are also updated when their xProfile is updated.
-
-If you're a developer, I'd welcome your contributions. If not, it's probably better to install this plugin from the [WordPress Plugin Directory](http://wordpress.org/plugins/bp-xprofile-wp-user-sync/).
 
 ## Installation ##
 
@@ -27,58 +25,6 @@ If you have downloaded *BP xProfile WordPress User Sync* as a ZIP file from the 
 
 If you have cloned the code from GitHub, it is assumed that you know what you're doing.
 
-## Changelogs ##
+## Upgrades ##
 
-### 0.6.4 ###
-
-Fix profile sync when first name and/or last name contain one or more spaces
-
-### 0.6.3 ###
-
-Fix profile sync from multisite subsites
-
-### 0.6.2 ###
-
-* More detailed plugin update warnings
-* Prevent "can_delete" being incorrectly updated
-
-### 0.6.1 ###
-
-Damage limitation
-
-### 0.6 ###
-
-Broken release :(
-
-### 0.5.3 ###
-
-Respect existing excluded fields during xProfile query process
-
-### 0.5.2 ###
-
-Pre-filter profile query when BP is sufficiently recent
-
-### 0.5.1 ###
-
-Fix translation (props flegmatiq)
-
-### 0.5 ###
-
-* Reconnect field data to field definitions when plugin is reactivated
-* Hides default name field from Profile Edit admin screen in BP 2.1+
-
-### 0.4 ###
-
-Tested compatibility with WP 3.8
-
-### 0.3 ###
-
-Compatibility with 'WP FB AutoConnect Premium' and 'CiviCRM WordPress Profile Sync' plugins
-
-### 0.2 ###
-
-Initial release
-
-### 0.1 ###
-
-Initial commit
+When upgrading this plugin, it is *strongly recommended* that you run `git pull` to replace the plugin directory directly. This is preferable because it avoids the deactivate-activate process that happens when upgrading via the WordPress updater.
