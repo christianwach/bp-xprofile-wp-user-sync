@@ -80,14 +80,12 @@ class BpXProfileWordPressUserSync {
 	 */
 	public function translation() {
 
-			// Enable translation.
-			load_plugin_textdomain(
-				'bp-xprofile-wp-user-sync', // Unique name.
-				false, // Deprecated argument.
-				dirname( plugin_basename( BP_XPROFILE_WP_USER_SYNC_FILE ) ) . '/languages/' // Relative path to translation files.
-			);
-
-		}
+		// Enable translation.
+		load_plugin_textdomain(
+			'bp-xprofile-wp-user-sync', // Unique name.
+			false, // Deprecated argument.
+			dirname( plugin_basename( BP_XPROFILE_WP_USER_SYNC_FILE ) ) . '/languages/' // Relative path to translation files.
+		);
 
 	}
 
