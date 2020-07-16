@@ -6,7 +6,7 @@ BP xProfile WordPress User Sync
 **Tags:** buddypress, xprofile, profile, sync<br/>
 **Requires at least:** 3.9<br/>
 **Tested up to:** 5.5<br/>
-**Stable tag:** 0.6.6<br/>
+**Stable tag:** 0.6.7<br/>
 **License:** GPLv2 or later<br/>
 **License URI:** https://www.gnu.org/licenses/gpl-2.0.html
 

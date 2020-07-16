@@ -4,7 +4,7 @@ Donate link: https://www.paypal.me/interactivist
 Tags: buddypress, xprofile, profile, sync
 Requires at least: 3.5
 Tested up to: 5.5
-Stable tag: 0.6.6
+Stable tag: 0.6.7
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
