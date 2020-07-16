@@ -128,6 +128,10 @@ Initial commit
 
 == Upgrade Notice ==
 
+= 0.6.6 =
+
+When upgrading this plugin, it is **strongly recommended** that you replace the plugin directory directly. This is preferable because it avoids the deactivate-activate process that happens with the WordPress updater.
+
 = 0.6.5 =
 
 When upgrading this plugin, it is **strongly recommended** that you replace the plugin directory directly. This is preferable because it avoids the deactivate-activate process that happens with the WordPress updater.
