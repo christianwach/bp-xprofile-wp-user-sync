@@ -584,7 +584,14 @@ class BpXProfileWordPressUserSync {
 	public function intercept_wp_user_update( $user_id ) {
 
 		// Only map data when the site admin is adding users, not on registration.
-		if ( ! is_admin() ) { return false; }
+		if ( ! is_admin() ) {
+			return;
+		}
+
+		// Don't sync when BuddyPress updates the "Name" field.
+		if ( doing_action( 'user_profile_update_errors' ) ) {
+			return;
+		}
 
 		// Pass to method.
 		$this->_user_update( $user_id );
@@ -868,6 +875,10 @@ class BpXProfileWordPressUserSync {
 				$user_id,
 				$full_name
 			);
+
+			// Add our hooks.
+			add_action( 'user_register', array( $this, 'intercept_wp_user_update' ), 30, 1 );
+			add_action( 'profile_update', array( $this, 'intercept_wp_user_update' ), 30, 1 );
 
 		}
 
