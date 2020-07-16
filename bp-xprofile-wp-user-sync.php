@@ -69,6 +69,28 @@ class BpXProfileWordPressUserSync {
 		// Use translation.
 		add_action( 'plugins_loaded', [ $this, 'translation' ] );
 
+		// Prevent auto-updates.
+		add_filter( 'plugin_auto_update_setting_html', [ $this, 'auto_update_prevent' ], 10, 3 );
+
+	}
+
+
+
+	/**
+	 * Prevent auto-updates of this plugin.
+	 *
+	 * @since 0.6.6
+	 */
+	function auto_update_prevent( $html, $plugin_file, $plugin_data ) {
+
+		// Test for this plugin.
+		if ( 'bp-xprofile-wp-user-sync/bp-xprofile-wp-user-sync.php' === $plugin_file ) {
+			$html = __( 'Auto-updates are not available for this plugin. See description for details.', 'bp-xprofile-wp-user-sync' );
+		}
+
+		// --<
+		return $html;
+
 	}
 
 
