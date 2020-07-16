@@ -42,6 +42,10 @@ This plugin is in active development. For feature requests and bug reports (or i
 
 == Changelog ==
 
+= 0.6.6 =
+
+Fix sync from WordPress to BuddyPress
+
 = 0.6.5 =
 
 Add translation files
