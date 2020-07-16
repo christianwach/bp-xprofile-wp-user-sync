@@ -1,5 +1,4 @@
-<?php
-/*
+<?php /*
 --------------------------------------------------------------------------------
 Plugin Name: BP XProfile WordPress User Sync
 Plugin URI: https://github.com/christianwach/bp-xprofile-wp-user-sync
@@ -26,6 +25,7 @@ if ( ! defined( 'BP_XPROFILE_WP_USER_SYNC_FILE' ) ) {
 if ( ! defined( 'BP_XPROFILE_WP_USER_SYNC_URL' ) ) {
 	define( 'BP_XPROFILE_WP_USER_SYNC_URL', plugin_dir_url( BP_XPROFILE_WP_USER_SYNC_FILE ) );
 }
+
 // Store PATH to this plugin's directory.
 if ( ! defined( 'BP_XPROFILE_WP_USER_SYNC_PATH' ) ) {
 	define( 'BP_XPROFILE_WP_USER_SYNC_PATH', plugin_dir_path( BP_XPROFILE_WP_USER_SYNC_FILE ) );
@@ -49,7 +49,7 @@ class BpXProfileWordPressUserSync {
 	 * @access public
 	 * @var array $options The plugin options array.
 	 */
-	public $options = array();
+	public $options = [];
 
 
 
@@ -61,13 +61,13 @@ class BpXProfileWordPressUserSync {
 	public function __construct() {
 
 		// Get options array, if it exists.
-		$this->options = get_option( 'bp_xp_wp_sync_options', array() );
+		$this->options = get_option( 'bp_xp_wp_sync_options', [] );
 
 		// Add action for plugin init.
-		add_action( 'bp_init', array( $this, 'register_hooks' ) );
+		add_action( 'bp_init', [ $this, 'register_hooks' ] );
 
 		// Use translation.
-		add_action( 'plugins_loaded', array( $this, 'translation' ) );
+		add_action( 'plugins_loaded', [ $this, 'translation' ] );
 
 	}
 
@@ -103,7 +103,9 @@ class BpXProfileWordPressUserSync {
 	public function activate() {
 
 		// Bail if BuddyPress xProfile not active.
-		if ( ! bp_is_active( 'xprofile' ) ) return;
+		if ( ! bp_is_active( 'xprofile' ) ) {
+			return;
+		}
 
 		// Are we re-activating?
 		$reactivating = ( get_option( 'bp_xp_wp_sync_installed', 'false' ) === 'true' ) ? true : false;
@@ -112,7 +114,7 @@ class BpXProfileWordPressUserSync {
 		if ( $reactivating ) {
 
 			// Yes, get existing field data.
-			$existing_fields = get_option( 'bp_xp_wp_sync_options_store', array() );
+			$existing_fields = get_option( 'bp_xp_wp_sync_options_store', [] );
 
 			// If we're reactivating after an upgrade from a version that does not
 			// Have the code to salvage the connection between fields and data.
@@ -233,7 +235,7 @@ class BpXProfileWordPressUserSync {
 		 */
 
 		// Init storage array.
-		$options = array();
+		$options = [];
 
 		// Bail if BuddyPress xProfile not active.
 		if ( ! bp_is_active( 'xprofile' ) ) return;
@@ -283,33 +285,33 @@ class BpXProfileWordPressUserSync {
 		if ( function_exists( 'bp_parse_args' ) ) {
 
 			// Use bp_parse_args post-parse filter (available since BP 2.0).
-			add_filter( 'bp_after_has_profile_parse_args', array( $this, 'intercept_profile_query_args' ), 30, 1 );
+			add_filter( 'bp_after_has_profile_parse_args', [ $this, 'intercept_profile_query_args' ], 30, 1 );
 
 		} else {
 
 			// Exclude the default name field type on profile edit and registration
 			// screens and exclude our fields on profile view screen.
-			add_filter( 'bp_has_profile', array( $this, 'intercept_profile_query' ), 30, 2 );
+			add_filter( 'bp_has_profile', [ $this, 'intercept_profile_query' ], 30, 2 );
 
 		}
 
 		// Exclude the default name field type on profile fields admin screen (available since BP 2.1).
-		add_filter( 'bp_xprofile_get_groups', array( $this, 'intercept_profile_fields_query' ), 30, 2 );
+		add_filter( 'bp_xprofile_get_groups', [ $this, 'intercept_profile_fields_query' ], 30, 2 );
 
 		// Populate our fields on user registration and update by admins.
-		add_action( 'user_register', array( $this, 'intercept_wp_user_update' ), 30, 1 );
-		add_action( 'profile_update', array( $this, 'intercept_wp_user_update' ), 30, 1 );
+		add_action( 'user_register', [ $this, 'intercept_wp_user_update' ], 30, 1 );
+		add_action( 'profile_update', [ $this, 'intercept_wp_user_update' ], 30, 1 );
 
 		// Remove 'user_register' and 'profile_update' hooks and add post-update hooks.
-		add_action( 'xprofile_updated_profile', array( $this, 'intercept_wp_profile_sync' ), 9, 3 );
-		add_action( 'bp_core_signup_user', array( $this, 'intercept_wp_profile_sync' ), 9, 3 );
-		add_action( 'bp_core_activated_user', array( $this, 'intercept_wp_profile_sync' ), 9, 3 );
+		add_action( 'xprofile_updated_profile', [ $this, 'intercept_wp_profile_sync' ], 9, 3 );
+		add_action( 'bp_core_signup_user', [ $this, 'intercept_wp_profile_sync' ], 9, 3 );
+		add_action( 'bp_core_activated_user', [ $this, 'intercept_wp_profile_sync' ], 9, 3 );
 
 		// Compatibility with "WP FB AutoConnect Premium".
-		add_filter( 'wpfb_xprofile_fields_received', array( $this, 'intercept_wp_fb_profile_sync' ), 10, 2 );
+		add_filter( 'wpfb_xprofile_fields_received', [ $this, 'intercept_wp_fb_profile_sync' ], 10, 2 );
 
 		// Compatibility with "WooCommerce".
-		add_action( 'woocommerce_save_account_details', array( $this, 'intercept_woo_user_update' ), 30, 1 );
+		add_action( 'woocommerce_save_account_details', [ $this, 'intercept_woo_user_update' ], 30, 1 );
 
 	}
 
@@ -389,7 +391,7 @@ class BpXProfileWordPressUserSync {
 	public function intercept_profile_query( $has_groups, $profile_template ) {
 
 		// Init args.
-		$args = array();
+		$args = [];
 
 		// If on profile view screen.
 		if ( bp_is_user_profile() AND ! bp_is_user_profile_edit() ) {
@@ -404,11 +406,9 @@ class BpXProfileWordPressUserSync {
 
 			// Check which profile group is being queried.
 			if (
-
 				isset( $profile_template->groups ) AND
 				is_array( $profile_template->groups ) AND
 				count( $profile_template->groups ) > 0
-
 			) {
 
 				// Don't want to pop, so loop through them.
@@ -473,11 +473,9 @@ class BpXProfileWordPressUserSync {
 
 			// Check which profile group is being queried.
 			if (
-
 				isset( $profile_template->groups ) AND
 				is_array( $profile_template->groups ) AND
 				count( $profile_template->groups ) > 0
-
 			) {
 
 				// Don't want to pop, so loop through them.
@@ -531,13 +529,13 @@ class BpXProfileWordPressUserSync {
 		if ( count( $args ) > 0 ) {
 
 			// Ditch our filter so we don't create an endless loop.
-			remove_filter( 'bp_has_profile', array( $this, 'intercept_profile_query' ), 30 );
+			remove_filter( 'bp_has_profile', [ $this, 'intercept_profile_query' ], 30 );
 
 			// Recreate profile_template.
 			$has_groups = bp_has_profile( $args );
 
 			// Add our filter again in case there are any other calls to bp_has_profile.
-			add_filter( 'bp_has_profile', array( $this, 'intercept_profile_query' ), 30, 2 );
+			add_filter( 'bp_has_profile', [ $this, 'intercept_profile_query' ], 30, 2 );
 
 		}
 
@@ -559,7 +557,9 @@ class BpXProfileWordPressUserSync {
 	public function intercept_profile_fields_query( $groups, $args ) {
 
 		// Bail if not in admin.
-		if ( ! is_admin() ) return $groups;
+		if ( ! is_admin() ) {
+			return $groups;
+		}
 
 		// Exclude name field.
 		$args['exclude_fields'] = bp_xprofile_fullname_field_id();
@@ -641,13 +641,13 @@ class BpXProfileWordPressUserSync {
 		}
 
 		// Remove our hooks.
-		remove_action( 'user_register', array( $this, 'intercept_wp_user_update' ), 30 );
-		remove_action( 'profile_update', array( $this, 'intercept_wp_user_update' ), 30 );
+		remove_action( 'user_register', [ $this, 'intercept_wp_user_update' ], 30 );
+		remove_action( 'profile_update', [ $this, 'intercept_wp_user_update' ], 30 );
 
 		// After xprofile_sync_wp_profile runs, re-sync with correct values.
-		add_action( 'xprofile_updated_profile', array( $this, 'intercept_wp_profile_sync_patch' ), 11, 3 );
-		add_action( 'bp_core_signup_user', array( $this, 'intercept_wp_profile_sync_patch' ), 11, 3 );
-		add_action( 'bp_core_activated_user', array( $this, 'intercept_wp_profile_sync_patch' ), 11, 3 );
+		add_action( 'xprofile_updated_profile', [ $this, 'intercept_wp_profile_sync_patch' ], 11, 3 );
+		add_action( 'bp_core_signup_user', [ $this, 'intercept_wp_profile_sync_patch' ], 11, 3 );
+		add_action( 'bp_core_activated_user', [ $this, 'intercept_wp_profile_sync_patch' ], 11, 3 );
 
 	}
 
@@ -702,15 +702,15 @@ class BpXProfileWordPressUserSync {
 		xprofile_set_field_data( bp_xprofile_fullname_field_name(), $user_id, $name );
 
 		// Remove our hooks.
-		remove_action( 'user_register', array( $this, 'intercept_wp_user_update' ), 30 );
-		remove_action( 'profile_update', array( $this, 'intercept_wp_user_update' ), 30 );
+		remove_action( 'user_register', [ $this, 'intercept_wp_user_update' ], 30 );
+		remove_action( 'profile_update', [ $this, 'intercept_wp_user_update' ], 30 );
 
 		// Now replicate BuddyPress sync procedure.
 		bp_update_user_meta( $user_id, 'nickname',   $name  );
 		bp_update_user_meta( $user_id, 'first_name', $first_name );
 		bp_update_user_meta( $user_id, 'last_name',  $last_name  );
 
-		wp_update_user( array( 'ID' => $user_id, 'display_name' => $name ) );
+		wp_update_user( [ 'ID' => $user_id, 'display_name' => $name ] );
 		wp_cache_delete( 'bp_core_userdata_' . $user_id, 'bp' );
 
 	}
@@ -780,107 +780,109 @@ class BpXProfileWordPressUserSync {
 	 */
 	private function _user_update( $user_id ) {
 
+		// Bail if xProfile isn't active.
+		if ( ! bp_is_active( 'xprofile' ) ) {
+			return;
+		}
+
 		// Populate the user's first and last names.
-		if ( bp_is_active( 'xprofile' ) ) {
 
-			// Get first name.
-			$first_name = bp_get_user_meta( $user_id, 'first_name', true );
+		// Get first name.
+		$first_name = bp_get_user_meta( $user_id, 'first_name', true );
 
-			// Get last name.
-			$last_name = bp_get_user_meta( $user_id, 'last_name', true );
+		// Get last name.
+		$last_name = bp_get_user_meta( $user_id, 'last_name', true );
 
-			// If nothing set.
-			if ( empty( $first_name ) AND empty( $last_name ) ) {
+		// If nothing set.
+		if ( empty( $first_name ) AND empty( $last_name ) ) {
 
-				// Get nickname instead.
-				$nickname = bp_get_user_meta( $user_id, 'nickname', true );
+			// Get nickname instead.
+			$nickname = bp_get_user_meta( $user_id, 'nickname', true );
 
-				// Does it have a space in it? (use core BP logic)
-				$space = strpos( $nickname, ' ' );
-				if ( false === $space ) {
-					$first_name = $nickname;
-					$last_name = '';
-				} else {
-					$first_name = substr( $nickname, 0, $space );
-					$last_name = trim( substr( $nickname, $space, strlen( $nickname ) ) );
-				}
-
+			// Does it have a space in it? (use core BP logic)
+			$space = strpos( $nickname, ' ' );
+			if ( false === $space ) {
+				$first_name = $nickname;
+				$last_name = '';
+			} else {
+				$first_name = substr( $nickname, 0, $space );
+				$last_name = trim( substr( $nickname, $space, strlen( $nickname ) ) );
 			}
-
-			/*
-			 * In multisite when not on the main blog, our options are not loaded
-			 * because I mistakenly failed to use a site_option instead of a blog
-			 * option. At the moment, there's little I can do except to switch to
-			 * the BP root blog and grab the values from there. I assume this
-			 * won't be a common occurrence and therefore that this won't cause
-			 * too much of an overhead.
-			 */
-
-			// Test for site other than main site.
-			if ( is_multisite() AND ! is_main_site() ) {
-
-				// Switch to main blog.
-				switch_to_blog( bp_get_root_blog_id() );
-
-				// Get options array, if it exists.
-				$this->options = get_option( 'bp_xp_wp_sync_options', array() );
-
-				// Switch back.
-				restore_current_blog();
-
-			}
-
-			// Test for one of our options.
-			if ( isset( $this->options['first_name_field_id'] ) ) {
-
-				// Update first_name field.
-				xprofile_set_field_data(
-					$this->options['first_name_field_id'],
-					$user_id,
-					$first_name
-				);
-
-				// Update last_name field.
-				xprofile_set_field_data(
-					$this->options['last_name_field_id'],
-					$user_id,
-					$last_name
-				);
-
-			}
-
-			/*
-			 * When xProfiles are updated, BuddyPress sets user nickname and
-			 * display name so we should too.
-			 */
-
-			// Construct full name.
-			$full_name = $first_name . ' ' . $last_name;
-
-			// Set user nickname.
-			bp_update_user_meta( $user_id, 'nickname', $full_name );
-
-			// Remove our hooks.
-			remove_action( 'user_register', array( $this, 'intercept_wp_user_update' ), 30 );
-			remove_action( 'profile_update', array( $this, 'intercept_wp_user_update' ), 30 );
-
-			// Set user display name - see xprofile_sync_wp_profile()
-			wp_update_user( array( 'ID' => $user_id, 'display_name' => $full_name ) );
-
-			// See notes above regarding when BuddyPress updates the "Name" field.
-
-			// Update BuddyPress "Name" field directly.
-			xprofile_set_field_data(
-				bp_xprofile_fullname_field_name(),
-				$user_id,
-				$full_name
-			);
-
-			// Add our hooks.
-			add_action( 'user_register', array( $this, 'intercept_wp_user_update' ), 30, 1 );
-			add_action( 'profile_update', array( $this, 'intercept_wp_user_update' ), 30, 1 );
 
 		}
+
+		/*
+		 * In multisite when not on the main blog, our options are not loaded
+		 * because I mistakenly failed to use a site_option instead of a blog
+		 * option. At the moment, there's little I can do except to switch to
+		 * the BP root blog and grab the values from there. I assume this
+		 * won't be a common occurrence and therefore that this won't cause
+		 * too much of an overhead.
+		 */
+
+		// Test for site other than main site.
+		if ( is_multisite() AND ! is_main_site() ) {
+
+			// Switch to main blog.
+			switch_to_blog( bp_get_root_blog_id() );
+
+			// Get options array, if it exists.
+			$this->options = get_option( 'bp_xp_wp_sync_options', [] );
+
+			// Switch back.
+			restore_current_blog();
+
+		}
+
+		// Test for one of our options.
+		if ( isset( $this->options['first_name_field_id'] ) ) {
+
+			// Update first_name field.
+			xprofile_set_field_data(
+				$this->options['first_name_field_id'],
+				$user_id,
+				$first_name
+			);
+
+			// Update last_name field.
+			xprofile_set_field_data(
+				$this->options['last_name_field_id'],
+				$user_id,
+				$last_name
+			);
+
+		}
+
+		/*
+		 * When xProfiles are updated, BuddyPress sets user nickname and
+		 * display name so we should too.
+		 */
+
+		// Construct full name.
+		$full_name = $first_name . ' ' . $last_name;
+
+		// Set user nickname.
+		bp_update_user_meta( $user_id, 'nickname', $full_name );
+
+		// Remove our hooks.
+		remove_action( 'user_register', [ $this, 'intercept_wp_user_update' ], 30 );
+		remove_action( 'profile_update', [ $this, 'intercept_wp_user_update' ], 30 );
+
+		// Set user display name - see xprofile_sync_wp_profile()
+		wp_update_user( [ 'ID' => $user_id, 'display_name' => $full_name ] );
+
+		// See notes above regarding when BuddyPress updates the "Name" field.
+
+		// Update BuddyPress "Name" field directly.
+		xprofile_set_field_data(
+			bp_xprofile_fullname_field_name(),
+			$user_id,
+			$full_name
+		);
+
+		// Add our hooks.
+		add_action( 'user_register', [ $this, 'intercept_wp_user_update' ], 30, 1 );
+		add_action( 'profile_update', [ $this, 'intercept_wp_user_update' ], 30, 1 );
 
 	}
 
@@ -922,7 +924,7 @@ class BpXProfileWordPressUserSync {
 
 		// Construct data to save.
 		$data = compact(
-			array( 'field_group_id', 'parent_id', 'type', 'name', 'description', 'is_required', 'can_delete' )
+			[ 'field_group_id', 'parent_id', 'type', 'name', 'description', 'is_required', 'can_delete' ]
 		);
 
 		// Use bp function to get new field ID.
@@ -1111,7 +1113,7 @@ class BpXProfileWordPressUserSync {
 			if ( ! empty( $excluded_fields ) ) {
 				$excluded_fields = explode( ',', $excluded_fields );
 			} else {
-				$excluded_fields = array();
+				$excluded_fields = [];
 			}
 		}
 
@@ -1119,7 +1121,7 @@ class BpXProfileWordPressUserSync {
 			if ( ! empty( $exclude_fields ) ) {
 				$exclude_fields = explode( ',', $exclude_fields );
 			} else {
-				$exclude_fields = array();
+				$exclude_fields = [];
 			}
 		}
 
@@ -1141,13 +1143,13 @@ class BpXProfileWordPressUserSync {
 global $bp_xprofile_wordpress_user_sync;
 
 // Init plugin.
-$bp_xprofile_wordpress_user_sync = new BpXProfileWordPressUserSync;
+$bp_xprofile_wordpress_user_sync = new BpXProfileWordPressUserSync();
 
 // Activation.
-register_activation_hook( __FILE__, array( $bp_xprofile_wordpress_user_sync, 'activate' ) );
+register_activation_hook( __FILE__, [ $bp_xprofile_wordpress_user_sync, 'activate' ] );
 
 // Deactivation.
-register_deactivation_hook( __FILE__, array( $bp_xprofile_wordpress_user_sync, 'deactivate' ) );
+register_deactivation_hook( __FILE__, [ $bp_xprofile_wordpress_user_sync, 'deactivate' ] );
 
 // Uninstall will use the 'uninstall.php' method when xProfile fields can be "deactivated".
 // See: http://codex.wordpress.org/Function_Reference/register_uninstall_hook
