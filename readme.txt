@@ -1,12 +1,12 @@
 === BP xProfile WordPress User Sync ===
 Contributors: needle
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8MZNB9D3PF48S
+Donate link: https://www.paypal.me/interactivist
 Tags: buddypress, xprofile, profile, sync
 Requires at least: 3.5
 Tested up to: 5.5
 Stable tag: 0.6.6
 License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 Replaces the default BuddyPress xProfile Name field with First Name and Last Name fields and keeps these in sync with WordPress user profile fields.
 
