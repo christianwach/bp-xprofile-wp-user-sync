@@ -1,4 +1,4 @@
-=== BP XProfile WordPress User Sync ===
+=== BP xProfile WordPress User Sync ===
 Contributors: needle
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8MZNB9D3PF48S
 Tags: buddypress, xprofile, profile, sync
