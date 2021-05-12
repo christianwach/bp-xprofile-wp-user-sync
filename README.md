@@ -5,14 +5,18 @@ BP xProfile WordPress User Sync
 **Donate link:** https://www.paypal.me/interactivist<br/>
 **Tags:** buddypress, xprofile, profile, sync<br/>
 **Requires at least:** 3.9<br/>
-**Tested up to:** 5.5<br/>
+**Tested up to:** 5.7<br/>
 **Stable tag:** 0.6.7<br/>
 **License:** GPLv2 or later<br/>
 **License URI:** https://www.gnu.org/licenses/gpl-2.0.html
 
+**IMPORTANT: Do not install this plugin if you already have BuddyPress 8.0.0 or greater.**
+
 Replaces the default BuddyPress xProfile Name field with First Name and Last Name fields and keeps these in sync with WordPress user profile fields.
 
 ### Description
+
+**IMPORTANT: This plugin is not needed if you have BuddyPress 8.0.0 or greater. If you are upgrading to BuddyPress 8.0.0 and already have this plugin installed, please upgrade and then visit this plugin's "Migration Page" to switch to using built-in BuddyPress xProfile Fields.**
 
 Please note: this is the development repository for *BP xProfile WordPress User Sync*. It can be found in [the WordPress Plugin Directory](https://wordpress.org/plugins/bp-xprofile-wp-user-sync/), which is the best place to get it from if you're not a developer.
 

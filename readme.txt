@@ -3,7 +3,7 @@ Contributors: needle
 Donate link: https://www.paypal.me/interactivist
 Tags: buddypress, xprofile, profile, sync
 Requires at least: 3.5
-Tested up to: 5.5
+Tested up to: 5.7
 Stable tag: 0.6.7
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -14,13 +14,15 @@ Replaces the default BuddyPress xProfile Name field with First Name and Last Nam
 
 == Description ==
 
+**IMPORTANT: This plugin is not needed if you have BuddyPress 8.0.0 or greater. If you are upgrading to BuddyPress 8.0.0 and already have this plugin installed, please upgrade via FTP/SFTP and then visit this plugin's "Migration Page" to switch to using built-in BuddyPress xProfile Fields.**
+
 The BP xProfile WordPress User Sync plugin is useful when you have a BuddyPress network in which you want to make sure that users enter values for First Name and Last Name rather than rely on the more freeform default Name field that BuddyPress provides.
 
 The plugin replaces the default BuddyPress xProfile Name field with two fields called (surprisingly) First Name and Last Name. These field values are kept in sync with the corresponding WordPress user profile fields as well as the BuddyPress xProfile Name field itself.
 
 ### Plugin Updates
 
-**The best way to update this plugin is to replace the folder with the latest version via FTP or similar. This avoids the deactivate-reactivate process.**
+**The best way to update this plugin is to replace the folder with the latest version via FTP/SFTP or similar. This avoids the deactivate-reactivate process.**
 
 ### Plugin Deactivation
 
@@ -28,7 +30,7 @@ The plugin replaces the default BuddyPress xProfile Name field with two fields c
 
 ### Plugin Development
 
-This plugin is in active development. For feature requests and bug reports (or if you're a plugin author and want to contribute) please visit the plugin's [GitHub repository](https://github.com/christianwach/bp-xprofile-wp-user-sync).
+This plugin is no longer in active development.
 
 
 
@@ -41,6 +43,10 @@ This plugin is in active development. For feature requests and bug reports (or i
 
 
 == Changelog ==
+
+= 0.6.7 =
+
+Final release helps migrate Fields to BuddyPress 8.0.0
 
 = 0.6.6 =
 
@@ -127,6 +133,10 @@ Initial commit
 
 
 == Upgrade Notice ==
+
+= 0.6.7 =
+
+When upgrading this plugin, it is **strongly recommended** that you replace the plugin directory directly. This is preferable because it avoids the deactivate-activate process that happens with the WordPress updater. This will be the final release of this plugin because BuddyPress itself now provides this functionality. Use the Migration Page to convert existing xProfile Fields to those provided by BuddyPress 8.0.0.
 
 = 0.6.6 =
 
