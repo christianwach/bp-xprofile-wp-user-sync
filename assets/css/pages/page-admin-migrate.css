@@ -1,0 +1,32 @@
+/**
+ * "Migrate Page" Styles.
+ *
+ * Implements styling for the "Migrate Page".
+ *
+ * @package BpXProfileWordPressUserSync
+ */
+
+
+
+/* Migrate Screen setup.
+----------------------------------*/
+#bpxpwp_info h4 {
+    font-size: 1.1em;
+}
+
+#bpxpwp_info p, #bpxpwp_info ul li {
+    font-size: 14px;
+}
+
+#bpxpwp_info code {
+    font-size: 13px;
+}
+
+#bpxpwp_info ul {
+	list-style: disc;
+	padding-left: 20px;
+}
+
+#bpxpwp_info .spinner {
+	float: none;
+}

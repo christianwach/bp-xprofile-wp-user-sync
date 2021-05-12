@@ -24,5 +24,6 @@ if ( !defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 delete_option( 'bp_xp_wp_sync_options' );
 delete_option( 'bp_xp_wp_sync_options_store' );
 delete_option( 'bp_xp_wp_sync_installed' );
+delete_option( 'bp_xp_wp_sync_migration' );
 
 

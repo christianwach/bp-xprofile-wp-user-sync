@@ -124,6 +124,11 @@ class BpXProfileWordPressUserSync {
 	 */
 	public function activate() {
 
+		// Test for a function introduced by the xProfile upgrade.
+		if ( function_exists( 'bp_xprofile_get_field_type' ) ) {
+			return;
+		}
+
 		// Bail if BuddyPress xProfile not active.
 		if ( ! bp_is_active( 'xprofile' ) ) {
 			return;
@@ -242,6 +247,11 @@ class BpXProfileWordPressUserSync {
 	 */
 	public function deactivate() {
 
+		// Test for a function introduced by the xProfile upgrade.
+		if ( function_exists( 'bp_xprofile_get_field_type' ) ) {
+			return;
+		}
+
 		/*
 		 * There seems to be no way to hide the xProfile fields once they have
 		 * been created, so we're left with no option but to lose the data when
@@ -302,6 +312,16 @@ class BpXProfileWordPressUserSync {
 	 * @since 0.1
 	 */
 	public function register_hooks() {
+
+		// Test for a function introduced by the xProfile upgrade.
+		if ( function_exists( 'bp_xprofile_get_field_type' ) ) {
+
+			// Help migrate xProfile Fields to BuddyPress.
+			include_once BP_XPROFILE_WP_USER_SYNC_PATH . 'bp-xprofile-wp-user-sync-migrate.php';
+			$this->migrate = new BP_xProfile_WP_User_Sync_Migrate( $this );
+			return;
+
+		}
 
 		// Do we have a version of BuddyPress capable of pre-filtering?
 		if ( function_exists( 'bp_parse_args' ) ) {
@@ -604,6 +624,11 @@ class BpXProfileWordPressUserSync {
 	 * @param integer $user_id The numeric ID of the WordPress user.
 	 */
 	public function intercept_wp_user_update( $user_id ) {
+
+		// Test for a function introduced by the xProfile upgrade.
+		if ( function_exists( 'bp_xprofile_get_field_type' ) ) {
+			return;
+		}
 
 		// Only map data when the site admin is adding users, not on registration.
 		if ( ! is_admin() ) {
