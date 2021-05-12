@@ -1,42 +1,260 @@
-# Copyright (C) 2020 BP xProfile WordPress User Sync
+# Copyright (C) 2021 BP xProfile WordPress User Sync
 # This file is distributed under the same license as the BP xProfile WordPress User Sync package.
 msgid ""
 msgstr ""
-"Project-Id-Version: BP xProfile WordPress User Sync 0.6.6\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/bp-xprofile-wp-user-sync\n"
-"POT-Creation-Date: 2020-07-16 21:08:13+00:00\n"
+"Project-Id-Version: BP xProfile WordPress User Sync 0.6.7\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/bp-xprofile-wp-"
+"user-sync\n"
+"POT-Creation-Date: 2021-05-12 13:20:57+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2020-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2021-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
-#: bp-xprofile-wp-user-sync.php:88
-msgid "Auto-updates are not available for this plugin. See description for details."
+#: assets/templates/metaboxes/metabox-migrate-info.php:4
+msgid "Why am I seeing this?"
 msgstr ""
 
-#: bp-xprofile-wp-user-sync.php:166
+#: assets/templates/metaboxes/metabox-migrate-info.php:6
+msgid ""
+"The BP xProfile WordPress User Sync plugin is no longer needed because the "
+"\"First Name\" and \"Last Name\" xProfile Fields that it provides have been "
+"added to BuddyPress 8.0.0. In addition to this, BuddyPress itself now "
+"handles syncing the data with the built-in WordPress User fields. For more "
+"information about this transition, please visit the %1$sBuddyPress Dev "
+"Update page%2$s."
+msgstr ""
+
+#: assets/templates/metaboxes/metabox-migrate-info.php:8
+msgid "What needs to be done?"
+msgstr ""
+
+#: assets/templates/metaboxes/metabox-migrate-info.php:10
+msgid ""
+"Before you go ahead and deactivate and delete the BP xProfile WordPress User "
+"Sync plugin, there are few things that need to be checked to make sure your "
+"site continues to work the way it did before."
+msgstr ""
+
+#: assets/templates/metaboxes/metabox-migrate-info.php:16
+msgid "Filters and Actions"
+msgstr ""
+
+#: assets/templates/metaboxes/metabox-migrate-info.php:18
+msgid ""
+"If you have not implemented any of the Filters or Actions provided by this "
+"plugin, then you can click the \"Confirm done\" button now."
+msgstr ""
+
+#: assets/templates/metaboxes/metabox-migrate-info.php:20
+msgid ""
+"When you deactivate this plugin, the Filters and Actions that it provides "
+"will no longer be available. If you have used them to modify or extend the "
+"behaviour of BP xProfile WordPress User Sync, then you will have to figure "
+"out the Filters and Actions in BuddyPress that can be used instead."
+msgstr ""
+
+#: assets/templates/metaboxes/metabox-migrate-info.php:20
+msgid "You need to do this before taking any further action."
+msgstr ""
+
+#: assets/templates/metaboxes/metabox-migrate-info.php:38
+msgid "xProfile Field Settings"
+msgstr ""
+
+#: assets/templates/metaboxes/metabox-migrate-info.php:40
+msgid ""
+"In order to switch to using the core BuddyPress functionality, you will have "
+"to make some changes to the \"First Name\" and \"Last Name\" xProfile Fields "
+"that were supplied by this plugin."
+msgstr ""
+
+#: assets/templates/metaboxes/metabox-migrate-info.php:42
+msgid "First Name Field"
+msgstr ""
+
+#: assets/templates/metaboxes/metabox-migrate-info.php:45
+msgid ""
+"Visit the BuddyPress \"Profile Fields\" page and edit the \"First Name\" "
+"Field."
+msgstr ""
+
+#: assets/templates/metaboxes/metabox-migrate-info.php:46
+#: assets/templates/metaboxes/metabox-migrate-info.php:56
+msgid ""
+"Use the dropdown to switch the Field Type to \"Text field\" in the "
+"\"WordPress Fields\" group."
+msgstr ""
+
+#: assets/templates/metaboxes/metabox-migrate-info.php:47
+#: assets/templates/metaboxes/metabox-migrate-info.php:57
+msgid ""
+"A section called \"Select the information you want to use for your WordPress "
+"field\" will appear."
+msgstr ""
+
+#: assets/templates/metaboxes/metabox-migrate-info.php:48
+msgid "Select the \"First Name\" radio button."
+msgstr ""
+
+#: assets/templates/metaboxes/metabox-migrate-info.php:49
+#: assets/templates/metaboxes/metabox-migrate-info.php:59
+msgid "Click \"Update\" to save the Field."
+msgstr ""
+
+#: assets/templates/metaboxes/metabox-migrate-info.php:52
+msgid "Last Name Field"
+msgstr ""
+
+#: assets/templates/metaboxes/metabox-migrate-info.php:55
+msgid ""
+"Visit the BuddyPress \"Profile Fields\" page and edit the \"Last Name\" "
+"Field."
+msgstr ""
+
+#: assets/templates/metaboxes/metabox-migrate-info.php:58
+msgid "Select the \"Last Name\" radio button."
+msgstr ""
+
+#: assets/templates/metaboxes/metabox-migrate-info.php:74
+msgid ""
+"You should only deactivate and delete BP xProfile WordPress User Sync when "
+"you are sure everything mentioned here has been attended to and you have "
+"clicked \"Submit\"."
+msgstr ""
+
+#: assets/templates/metaboxes/metabox-migrate-info.php:78
+msgid "Congratulations!"
+msgstr ""
+
+#: assets/templates/metaboxes/metabox-migrate-info.php:80
+msgid ""
+"You have successfully migrated from BP xProfile WordPress User Sync to "
+"BuddyPress core functionality."
+msgstr ""
+
+#: assets/templates/metaboxes/metabox-migrate-info.php:83
+msgid ""
+"You can now go to your %1$sPlugins page%2$s and deactivate the BP xProfile "
+"WordPress User Sync plugin."
+msgstr ""
+
+#: assets/templates/metaboxes/metabox-migrate-submit.php:6
+msgid "I have checked everything mentioned here and I am ready to migrate."
+msgstr ""
+
+#: assets/templates/metaboxes/metabox-migrate-submit.php:14
+msgid "Submit"
+msgstr ""
+
+#. #-#-#-#-#  bp-xprofile-wp-user-sync.pot (BP xProfile WordPress User Sync 0.6.7)  #-#-#-#-#
+#. Plugin Name of the plugin/theme
+#: assets/templates/pages/page-admin-migrate.php:14
+#: bp-xprofile-wp-user-sync-migrate.php:221
+msgid "BP xProfile WordPress User Sync"
+msgstr ""
+
+#: bp-xprofile-wp-user-sync-migrate.php:164
+msgid "You can now deactivate %1$sBP xProfile WordPress User Sync%2$s."
+msgstr ""
+
+#: bp-xprofile-wp-user-sync-migrate.php:173
+msgid "Please visit the %1$sPlugins Page%2$s to deactivate it."
+msgstr ""
+
+#: bp-xprofile-wp-user-sync-migrate.php:178
+msgid "%1$s %2$s"
+msgstr ""
+
+#: bp-xprofile-wp-user-sync-migrate.php:186
+msgid ""
+"%1$sBP xProfile WordPress User Sync%2$s is no longer required. Please visit "
+"the %3$sMigration Page%4$s before disabling it."
+msgstr ""
+
+#: bp-xprofile-wp-user-sync-migrate.php:222
+msgid "BP xProfile Sync"
+msgstr ""
+
+#: bp-xprofile-wp-user-sync-migrate.php:275
+#: bp-xprofile-wp-user-sync-migrate.php:427
+#: bp-xprofile-wp-user-sync-migrate.php:440
+msgid "Confirm done"
+msgstr ""
+
+#: bp-xprofile-wp-user-sync-migrate.php:276
+msgid "Confirming..."
+msgstr ""
+
+#: bp-xprofile-wp-user-sync-migrate.php:324
+#: bp-xprofile-wp-user-sync-migrate.php:329
+msgid "You do not have permission to access this page."
+msgstr ""
+
+#: bp-xprofile-wp-user-sync-migrate.php:415
+msgid "Migration Tasks"
+msgstr ""
+
+#: bp-xprofile-wp-user-sync-migrate.php:417
+msgid "Migration Complete"
+msgstr ""
+
+#: bp-xprofile-wp-user-sync-migrate.php:460
+msgid "Confirm Migration"
+msgstr ""
+
+#: bp-xprofile-wp-user-sync-migrate.php:626
+#: bp-xprofile-wp-user-sync-migrate.php:666
+msgid "Authentication failed."
+msgstr ""
+
+#: bp-xprofile-wp-user-sync-migrate.php:690
+msgid "Please change the Type of the \"First Name\" xProfile Field"
+msgstr ""
+
+#: bp-xprofile-wp-user-sync-migrate.php:697
+msgid ""
+"Please select the WordPress User field for the \"First Name\" xProfile Field"
+msgstr ""
+
+#: bp-xprofile-wp-user-sync-migrate.php:708
+msgid "Please change the Type of the \"Last Name\" xProfile Field"
+msgstr ""
+
+#: bp-xprofile-wp-user-sync-migrate.php:715
+msgid ""
+"Please select the WordPress User field for the \"Last Name\" xProfile Field"
+msgstr ""
+
+#: bp-xprofile-wp-user-sync.php:88
+msgid ""
+"Auto-updates are not available for this plugin. See description for details."
+msgstr ""
+
+#: bp-xprofile-wp-user-sync.php:171
 msgid "First Name"
 msgstr ""
 
-#: bp-xprofile-wp-user-sync.php:183
+#: bp-xprofile-wp-user-sync.php:188
 msgid "Last Name"
 msgstr ""
 
-#: bp-xprofile-wp-user-sync.php:959
+#: bp-xprofile-wp-user-sync.php:984
 msgid "BP XProfile WordPress User Sync plugin: Could not create xProfile field"
 msgstr ""
 
-#: bp-xprofile-wp-user-sync.php:997
-msgid "BP XProfile WordPress User Sync plugin: Could not set \"can_delete\" for xProfile field"
+#: bp-xprofile-wp-user-sync.php:1022
+msgid ""
+"BP XProfile WordPress User Sync plugin: Could not set \"can_delete\" for "
+"xProfile field"
 msgstr ""
 
-#: bp-xprofile-wp-user-sync.php:1043
-msgid "BP XProfile WordPress User Sync plugin: An xProfile field with that ID already exists. Cannot reconnect data."
-msgstr ""
-#. Plugin Name of the plugin/theme
-msgid "BP xProfile WordPress User Sync"
+#: bp-xprofile-wp-user-sync.php:1068
+msgid ""
+"BP XProfile WordPress User Sync plugin: An xProfile field with that ID "
+"already exists. Cannot reconnect data."
 msgstr ""
 
 #. Plugin URI of the plugin/theme
@@ -44,7 +262,14 @@ msgid "https://github.com/christianwach/bp-xprofile-wp-user-sync"
 msgstr ""
 
 #. Description of the plugin/theme
-msgid "Map BuddyPress xProfile fields to WordPress User fields. <strong>Note:</strong> because there is no way to hide xProfile fields, all field definitions are deleted when it is deactivated. The plugin tries to reconnect on reactivation, but always backup before deactivating. <strong>The best way to update this plugin is to replace the folder with the latest version via FTP or similar. This avoids the deactivate-reactivate process.</strong>"
+msgid ""
+"Map BuddyPress xProfile fields to WordPress User fields. <strong>Note:</"
+"strong> because there is no way to hide xProfile fields, all field "
+"definitions are deleted when it is deactivated. The plugin tries to "
+"reconnect on reactivation, but always backup before deactivating. "
+"<strong>The best way to update this plugin is to replace the folder with the "
+"latest version via FTP or similar. This avoids the deactivate-reactivate "
+"process.</strong>"
 msgstr ""
 
 #. Author of the plugin/theme
@@ -52,5 +277,5 @@ msgid "Christian Wach"
 msgstr ""
 
 #. Author URI of the plugin/theme
-msgid "http://haystack.co.uk"
+msgid "https://haystack.co.uk"
 msgstr ""
