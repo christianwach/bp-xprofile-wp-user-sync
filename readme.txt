@@ -14,7 +14,7 @@ Replaces the default BuddyPress xProfile Name field with First Name and Last Nam
 
 == Description ==
 
-**IMPORTANT: This plugin is not needed if you have BuddyPress 8.0.0 or greater. If you are upgrading to BuddyPress 8.0.0 and already have this plugin installed, please upgrade via FTP/SFTP and then visit this plugin's "Migration Page" to switch to using built-in BuddyPress xProfile Fields.**
+**IMPORTANT: This plugin is not needed if you have [BuddyPress 8.0.0 or greater](https://bpdevel.wordpress.com/2021/03/24/wordpress-xprofile-field-types/). If you are upgrading to BuddyPress 8.0.0 and already have this plugin installed, please upgrade via FTP/SFTP and then visit this plugin's "Migration Page" to switch to using built-in BuddyPress xProfile Fields.**
 
 The BP xProfile WordPress User Sync plugin is useful when you have a BuddyPress network in which you want to make sure that users enter values for First Name and Last Name rather than rely on the more freeform default Name field that BuddyPress provides.
 
