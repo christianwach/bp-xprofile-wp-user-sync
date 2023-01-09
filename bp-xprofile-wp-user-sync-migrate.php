@@ -490,7 +490,7 @@ class BP_xProfile_WP_User_Sync_Migrate {
 	 * @param mixed $unused Unused param.
 	 * @param array $metabox Array containing id, title, callback, and args elements.
 	 */
-	public function meta_box_submit_render( $unused = NULL, $metabox ) {
+	public function meta_box_submit_render( $unused, $metabox ) {
 
 		// Include template file.
 		include BP_XPROFILE_WP_USER_SYNC_PATH . 'assets/templates/metaboxes/metabox-migrate-submit.php';
@@ -507,7 +507,7 @@ class BP_xProfile_WP_User_Sync_Migrate {
 	 * @param mixed $unused Unused param.
 	 * @param array $metabox Array containing id, title, callback, and args elements.
 	 */
-	public function meta_box_migrate_render( $unused = NULL, $metabox ) {
+	public function meta_box_migrate_render( $unused, $metabox ) {
 
 		// Include template file.
 		include BP_XPROFILE_WP_USER_SYNC_PATH . 'assets/templates/metaboxes/metabox-migrate-info.php';

@@ -672,7 +672,7 @@ class BpXProfileWordPressUserSync {
 	 * @param array $posted_field_ids Array of xProfile field IDs.
 	 * @param boolean $errors Any errors.
 	 */
-	public function intercept_wp_profile_sync( $user_id = 0, $posted_field_ids, $errors ) {
+	public function intercept_wp_profile_sync( $user_id, $posted_field_ids, $errors ) {
 
 		// Bail if profile syncing is disabled.
 		if ( bp_disable_profile_sync() ) {
@@ -709,7 +709,7 @@ class BpXProfileWordPressUserSync {
 	 * @param array $posted_field_ids Array of xProfile field IDs.
 	 * @param boolean $errors Any errors.
 	 */
-	public function intercept_wp_profile_sync_patch( $user_id = 0, $posted_field_ids, $errors ) {
+	public function intercept_wp_profile_sync_patch( $user_id, $posted_field_ids, $errors ) {
 
 		// Bail if profile syncing is disabled.
 		if ( bp_disable_profile_sync() ) {
